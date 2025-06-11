@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="AddressBook Module Suite" parallel="false">
+<listeners>
+        <listener class-name="docuexec.EnduserAllModules.MyTestListener"/>
+    </listeners>
+    <test name="Test - Add Individual">
+        <classes>
+            <class name="docuexec.EnduserAllModules.AddressBook">
+                <methods>
+                    <include name="AddIndividual"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Test - Remove User">
+        <classes>
+            <class name="docuexec.EnduserAllModules.AddressBook">
+                <methods>
+                    <include name="removeuser"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Test - Add Group">
+        <classes>
+            <class name="docuexec.EnduserAllModules.AddressBook">
+                <methods>
+                    <include name="AddGroup"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Test - Remove Group">
+        <classes>
+            <class name="docuexec.EnduserAllModules.AddressBook">
+                <methods>
+                    <include name="removeGroup"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Test - Scenario1 (Batch Add)">
+        <classes>
+            <class name="docuexec.EnduserAllModules.AddressBook">
+                <methods>
+                    <include name="Scenario1"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

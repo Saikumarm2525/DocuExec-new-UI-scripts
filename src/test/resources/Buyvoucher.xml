@@ -1,0 +1,50 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="BuyVouchersSuite" parallel="false">
+<listeners>
+        <listener class-name="docuexec.EnduserAllModules.MyTestListener"/>
+    </listeners>
+    <!-- Test for vouchers -->
+    <test name="BuyVoucherTest">
+        <classes>
+            <class name="docuexec.EnduserAllModules.BuyVouchers">
+                <methods>
+                    <include name="samevouchers" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- Test for buying different vouchers -->
+    <test name="DifferentVoucherTest">
+        <classes>
+            <class name="docuexec.EnduserAllModules.BuyVouchers">
+                <methods>
+                    <include name="differentVouchers" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- Test for voucher summary for existing user -->
+    <test name="VoucherSummaryTest">
+        <classes>
+            <class name="docuexec.EnduserAllModules.BuyVouchers">
+                <methods>
+                    <include name="Vouchersummary" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- Test for voucher summary for new user -->
+    <test name="NewUserVoucherSummaryTest">
+        <classes>
+            <class name="docuexec.EnduserAllModules.BuyVouchers">
+                <methods>
+                    <include name="newUserVouchersummary" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

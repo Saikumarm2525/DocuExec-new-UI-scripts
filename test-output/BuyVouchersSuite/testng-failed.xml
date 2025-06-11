@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [BuyVouchersSuite]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="BuyVoucherTest(failed)">
+    <classes>
+      <class name="docuexec.EnduserAllModules.BuyVouchers">
+        <methods>
+          <include name="close"/>
+          <include name="samevouchers"/>
+          <include name="setUp"/>
+        </methods>
+      </class> <!-- docuexec.EnduserAllModules.BuyVouchers -->
+    </classes>
+  </test> <!-- BuyVoucherTest(failed) -->
+  <test thread-count="5" name="DifferentVoucherTest(failed)">
+    <classes>
+      <class name="docuexec.EnduserAllModules.BuyVouchers">
+        <methods>
+          <include name="close"/>
+          <include name="differentVouchers"/>
+          <include name="setUp"/>
+        </methods>
+      </class> <!-- docuexec.EnduserAllModules.BuyVouchers -->
+    </classes>
+  </test> <!-- DifferentVoucherTest(failed) -->
+  <test thread-count="5" name="VoucherSummaryTest(failed)">
+    <classes>
+      <class name="docuexec.EnduserAllModules.BuyVouchers">
+        <methods>
+          <include name="close"/>
+          <include name="setUp"/>
+          <include name="Vouchersummary"/>
+        </methods>
+      </class> <!-- docuexec.EnduserAllModules.BuyVouchers -->
+    </classes>
+  </test> <!-- VoucherSummaryTest(failed) -->
+  <test thread-count="5" name="NewUserVoucherSummaryTest(failed)">
+    <classes>
+      <class name="docuexec.EnduserAllModules.BuyVouchers">
+        <methods>
+          <include name="close"/>
+          <include name="setUp"/>
+          <include name="newUserVouchersummary"/>
+        </methods>
+      </class> <!-- docuexec.EnduserAllModules.BuyVouchers -->
+    </classes>
+  </test> <!-- NewUserVoucherSummaryTest(failed) -->
+</suite> <!-- Failed suite [BuyVouchersSuite] -->

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="PendingAction_ElectronicSuite">
+<listeners>
+        <listener class-name="docuexec.EnduserAllModules.MyTestListener"/>
+    </listeners>
+    <test name="E_Finish_CurrentPage">
+        <classes>
+            <class name="docuexec.EnduserAllModules.PendingAction">
+                <methods>
+                    <include name="E_Finish_PendingActionOnCurrentPage"/>
+                </methods>
+            </class>	
+        </classes>
+    </test>
+
+    <test name="E_Finish_AllPages">
+        <classes>
+            <class name="docuexec.EnduserAllModules.PendingAction">
+                <methods>
+                    <include name="E_Finish_PendingActionOnAllPages"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="E_Finish_CustomPages">
+        <classes>
+            <class name="docuexec.EnduserAllModules.PendingAction">
+                <methods>
+                    <include name="E_Finish_PendingActionOnCustomPages"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+    <test name="E_DSA_CurrentPage">
+    <classes>
+        <class name="docuexec.EnduserAllModules.PendingAction">
+            <methods>
+                <include name="E_DSA_PendingActionOnCurrentPage"/>
+            </methods>
+        </class>
+    </classes>
+</test>
+
+<test name="E_DSA_AllPages">
+    <classes>
+        <class name="docuexec.EnduserAllModules.PendingAction">
+            <methods>
+                <include name="E_DSA_PendingActionOnAllPages"/>
+            </methods>
+        </class>
+    </classes>
+</test>
+
+<test name="E_DSA_CustomPages">
+    <classes>
+        <class name="docuexec.EnduserAllModules.PendingAction">
+            <methods>
+                <include name="E_DSA_PendingActionOnCustomPages"/>
+            </methods>
+        </class>
+    </classes>
+</test>
+<test name="E_Discard_CurrentPage">
+    <classes>
+        <class name="docuexec.EnduserAllModules.PendingAction">
+            <methods>
+                <include name="E_Discard_PendingActionOnCurrentPage"/>
+            </methods>
+        </class>
+    </classes>
+</test>
+
+<test name="E_Discard_AllPages">
+    <classes>
+        <class name="docuexec.EnduserAllModules.PendingAction">
+            <methods>
+                <include name="E_Discard_PendingActionOnAllPages"/>
+            </methods>
+        </class>
+    </classes>
+</test>
+
+<test name="E_Discard_CustomPages">
+    <classes>
+        <class name="docuexec.EnduserAllModules.PendingAction">
+            <methods>
+                <include name="E_Discard_PendingActionOnCustomPages"/>
+            </methods>
+        </class>
+    </classes>
+</test>
+
+
+</suite>

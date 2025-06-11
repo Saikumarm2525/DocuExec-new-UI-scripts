@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Electronic_OTP_DifferentPageSigningTestSuite">
+   <listeners>
+        <listener class-name="docuexec.EnduserAllModules.MyTestListener"/>
+    </listeners>
+
+    <test thread-count="1" name="Test_ElectronicDiscard_EcurentDAS">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Watermarkpdf">
+                <methods>
+                    <include name="EcurentDAS" />
+                    <include name="close" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_ElectronicDiscard_EallDAS">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Watermarkpdf">
+                <methods>
+                    <include name="EallDAS" />
+                    <include name="close" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_ElectronicDiscard_EcustomDAS">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Watermarkpdf">
+                <methods>
+                    <include name="EcustomDAS" />
+                    <include name="close" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_ElectronicDiscard_Ecurrentdiscard">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Watermarkpdf">
+                <methods>
+                    <include name="Ecurrentdiscard" />
+                    <include name="close" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_ElectronicDiscard_EAlldiscard">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Watermarkpdf">
+                <methods>
+                    <include name="EAlldiscard" />
+                    <include name="close" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_ElectronicDiscard_Ecustomdiscard">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Watermarkpdf">
+                <methods>
+                    <include name="Ecustomdiscard" />
+                    <include name="close" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_ElectronicFinish_ETestcurrentPage">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Watermarkpdf">
+                <methods>
+                    <include name="ETestcurrentPage" />
+                    <include name="close" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_ElectronicFinish_ETestAllPage">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Watermarkpdf">
+                <methods>
+                    <include name="ETestAllPage" />
+                    <include name="close" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_ElectronicFinish_ETestcustomPage">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Watermarkpdf">
+                <methods>
+                    <include name="ETestcustomPage" />
+                    <include name="close" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

@@ -1,0 +1,50 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="ChangePasswordProceedSuite">
+  <listeners>
+        <listener class-name="docuexec.EnduserAllModules.MyTestListener"/>
+    </listeners>  <test name="ChangePasswordProceedTest">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Usermanagement">
+                <methods>
+                    <include name="changepasswordProceed"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="ChangePasswordCancelTest">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Usermanagement">
+                <methods>
+                    <include name="changepasswordCancel"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="EditNameTest">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Usermanagement">
+                <methods>
+                    <include name="Editname"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="EditMailTest">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Usermanagement">
+                <methods>
+                    <include name="Editmail"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="EditMobileNumberTest">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Usermanagement">
+                <methods>
+                    <include name="Editmobilenumber"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="PendingAction_ElectronicSuite">
+
+    <test name="E_Finish_CurrentPage">
+        <classes>
+            <class name="docuexec.EnduserAllModules.PendingActionElectronic">
+                <methods>
+                    <include name="E_Finish_PendingActionOnCurrentPage"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="E_Finish_AllPages">
+        <classes>
+            <class name="docuexec.EnduserAllModules.PendingActionElectronic">
+                <methods>
+                    <include name="E_Finish_PendingActionOnAllPages"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="E_Finish_CustomPages">
+        <classes>
+            <class name="docuexec.EnduserAllModules.PendingActionElectronic">
+                <methods>
+                    <include name="E_Finish_PendingActionOnCustomPages"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

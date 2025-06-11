@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [AddressBook Module Suite]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="Test - Add Individual(failed)">
+    <classes>
+      <class name="docuexec.EnduserAllModules.AddressBook">
+        <methods>
+          <include name="close"/>
+          <include name="AddIndividual"/>
+          <include name="setUp"/>
+        </methods>
+      </class> <!-- docuexec.EnduserAllModules.AddressBook -->
+    </classes>
+  </test> <!-- Test - Add Individual(failed) -->
+  <test thread-count="5" name="Test - Remove User(failed)">
+    <classes>
+      <class name="docuexec.EnduserAllModules.AddressBook">
+        <methods>
+          <include name="close"/>
+          <include name="removeuser"/>
+          <include name="setUp"/>
+        </methods>
+      </class> <!-- docuexec.EnduserAllModules.AddressBook -->
+    </classes>
+  </test> <!-- Test - Remove User(failed) -->
+  <test thread-count="5" name="Test - Add Group(failed)">
+    <classes>
+      <class name="docuexec.EnduserAllModules.AddressBook">
+        <methods>
+          <include name="close"/>
+          <include name="AddGroup"/>
+          <include name="setUp"/>
+        </methods>
+      </class> <!-- docuexec.EnduserAllModules.AddressBook -->
+    </classes>
+  </test> <!-- Test - Add Group(failed) -->
+  <test thread-count="5" name="Test - Remove Group(failed)">
+    <classes>
+      <class name="docuexec.EnduserAllModules.AddressBook">
+        <methods>
+          <include name="removeGroup"/>
+          <include name="close"/>
+          <include name="setUp"/>
+        </methods>
+      </class> <!-- docuexec.EnduserAllModules.AddressBook -->
+    </classes>
+  </test> <!-- Test - Remove Group(failed) -->
+</suite> <!-- Failed suite [AddressBook Module Suite] -->
