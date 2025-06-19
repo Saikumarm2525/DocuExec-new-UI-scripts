@@ -24,12 +24,12 @@ public class esignTopup extends Baseclass{
 
 		Thread.sleep(2000);
 		try {
-		driver.findElement(By.partialLinkText("TopUp")).click();//click on Topup btn
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[4]/div/div")).click();//click on Topup btn
 		}
 		catch(NoSuchElementException e)
 		{
 			Thread.sleep(4000);
-			driver.findElement(By.xpath("(//*[@id=\"defaultBackGround\"]/div[1]/div/ul/li[4])[1]")).click();//click on Topup btn
+			driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[4]/div/div[2]/a[1]")).click();//click on Topup btn
 
 		}
 		catch (Exception e) 
@@ -38,35 +38,25 @@ public class esignTopup extends Baseclass{
 			driver.findElement(By.cssSelector("#defaultBackGround > div.sidebar > div > ul > li:nth-child(4) > a")).click();//click on Topup btn
 		}
 		Thread.sleep(5000);
-		
-		try 
-		{			driver.findElement(By.xpath("(/html/body/div/div/div/div[1]/div/ul/li[4]/ul/li[1]/a)[1]")).click();			//click on e-signTopup button 1			
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[4]/div/div[2]/a[1]")).click();//click on esign-Topup btn
+		Thread.sleep(4000);
+		driver.findElement(By.xpath("//*[@id=\"rateCardTopup\"]/div[2]/div/div[2]/div/div/div/table/tbody/tr[1]/td[4]/button/img")).isEnabled();
+		driver.findElement(By.xpath("//*[@id=\"rateCardTopup\"]/div[2]/div/div[2]/div/div/div/table/tbody/tr[2]/td[4]/button/img")).isEnabled();
+		driver.findElement(By.xpath("//*[@id=\"rateCardTopup\"]/div[2]/div/div[2]/div/div/div/table/tbody/tr[3]/td[4]/button/img")).isEnabled();
+		driver.findElement(By.xpath("//*[@id=\"rateCardTopup\"]/div[2]/div/div[2]/div/div/div/table/tbody/tr[4]/td[4]/button/img")).isEnabled();
+		driver.findElement(By.xpath("//*[@id=\"rateCardTopup\"]/div[2]/div/div[2]/div/div/div/table/tbody/tr[5]/td[4]/button/img")).isEnabled();
+		driver.findElement(By.xpath("//*[@id=\"rateCardTopup\"]/div[2]/div/div[2]/div/div/div/table/tbody/tr[6]/td[4]/button/img")).isEnabled();
+		driver.findElement(By.xpath("//*[@id=\"rateCardTopup\"]/div[2]/div/div[2]/div/div/div/table/tbody/tr[7]/td[4]/button/img")).isEnabled();
 
 		
-		}
-			catch(NoSuchElementException e)
-			{
-				Thread.sleep(3000);
-				driver.findElement(By.cssSelector("#defaultBackGround > div.sidebar > div > ul > li.nav-item.nav-dropdown.open > ul > li:nth-child(1) > a")).click();//click on Topup btn
-
-			}	
-		try{Thread.sleep(2000);
-		driver.findElement(By.partialLinkText("eSign TopUp")).click();
-		}
-		catch(Exception e)
-		{
-			Thread.sleep(2000);
-			driver.findElement(By.cssSelector("#eSignTopUpId")).click();
-
-		}
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("//*[@id=\"paymentOptionTbody\"]/tr[1]/td[4]")).click();//click on topup btn
+		driver.findElement(By.xpath("(//td[contains(@class,'MuiTableCell-root MuiTableCell-body')]//button)[1]")).click();//click on topup btn
 		Thread.sleep(2000);
 		//driver.findElement(By.xpath("//*[@id=\"paymentOptionTbody\"]/tr[1]/td[4]/span")).click();//Topup btn click
 		Thread.sleep(2000);
-		driver.findElement(By.id("invoicepayBtn")).click();//pay btn click
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[3]/div[1]/div[2]/div[2]/div[2]/div/span")).click();//pay btn click
 		//Request initiated successfully
-		  WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div")));
+		  WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/p")));
 		    String message = Emessage.getText().trim();
 
 		    // Check if the message contains the specific text and extract it
@@ -87,9 +77,7 @@ public class esignTopup extends Baseclass{
 				softAssert.assertAll();
 
 	}
-	public void withoutvkycEsign_topup() {
-		
-	}
+	
 	
 	
 }

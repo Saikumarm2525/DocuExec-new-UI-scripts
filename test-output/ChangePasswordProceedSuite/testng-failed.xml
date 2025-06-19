@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [ChangePasswordProceedSuite]" guice-stage="DEVELOPMENT">
+  <listeners>
+    <listener class-name="docuexec.EnduserAllModules.MyTestListener"/>
+  </listeners>
+  <test name="ChangePasswordProceedTest(failed)">
+    <classes>
+      <class name="docuexec.EnduserAllModules.Usermanagement">
+        <methods>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="close"/>
+          <include name="close"/>
+          <include name="close"/>
+          <include name="close"/>
+          <include name="changepasswordProceed"/>
+        </methods>
+      </class> <!-- docuexec.EnduserAllModules.Usermanagement -->
+    </classes>
+  </test> <!-- ChangePasswordProceedTest(failed) -->
+  <test name="ChangePasswordCancelTest(failed)">
+    <classes>
+      <class name="docuexec.EnduserAllModules.Usermanagement">
+        <methods>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="close"/>
+          <include name="close"/>
+          <include name="close"/>
+          <include name="close"/>
+          <include name="changepasswordCancel"/>
+        </methods>
+      </class> <!-- docuexec.EnduserAllModules.Usermanagement -->
+    </classes>
+  </test> <!-- ChangePasswordCancelTest(failed) -->
+  <test name="EditNameTest(failed)">
+    <classes>
+      <class name="docuexec.EnduserAllModules.Usermanagement">
+        <methods>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="close"/>
+          <include name="close"/>
+          <include name="close"/>
+          <include name="close"/>
+          <include name="Editname"/>
+        </methods>
+      </class> <!-- docuexec.EnduserAllModules.Usermanagement -->
+    </classes>
+  </test> <!-- EditNameTest(failed) -->
+  <test name="EditMailTest(failed)">
+    <classes>
+      <class name="docuexec.EnduserAllModules.Usermanagement">
+        <methods>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="close"/>
+          <include name="close"/>
+          <include name="close"/>
+          <include name="close"/>
+          <include name="Editmail"/>
+        </methods>
+      </class> <!-- docuexec.EnduserAllModules.Usermanagement -->
+    </classes>
+  </test> <!-- EditMailTest(failed) -->
+  <test name="EditMobileNumberTest(failed)">
+    <classes>
+      <class name="docuexec.EnduserAllModules.Usermanagement">
+        <methods>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="setUp"/>
+          <include name="close"/>
+          <include name="close"/>
+          <include name="close"/>
+          <include name="close"/>
+          <include name="Editmobilenumber"/>
+        </methods>
+      </class> <!-- docuexec.EnduserAllModules.Usermanagement -->
+    </classes>
+  </test> <!-- EditMobileNumberTest(failed) -->
+</suite> <!-- Failed suite [ChangePasswordProceedSuite] -->

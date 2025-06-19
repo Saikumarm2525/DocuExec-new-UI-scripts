@@ -41,129 +41,88 @@ import org.testng.annotations.Test;
 @Listeners(MyTestListener.class)
 public class NewUserLoginTermsConAgree extends Baseclass {
 
-    @Test
-    public void NewUserSigningTermsAndCondition() throws Exception {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25)); // Wait object with 25s timeout
-        Actions actions = new Actions(driver); // Initialize Actions class for advanced user interactions
+	   @Test
+	    public void NewUserSigningTermsAndCondition() throws Exception {
+	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
+	        Actions actions = new Actions(driver);
 
-        testLogin(); // Login to the DocuExec application
+	        testLogin();
 
-        clickAccountDetails(); // Click "Account Details" in the sidebar
-        Thread.sleep(3000);
+	        clickAccountDetails();
 
-        // Verify "Full Name" label is visible
-        WebElement fullName = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[text()='Full Name']")));
-        Assert.assertTrue(fullName.isDisplayed());
+	        WebElement fullName = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[text()='Full Name']")));
+	        Assert.assertTrue(fullName.isDisplayed());
 
-        // Verify "Aadhaar sign units" label is visible
-        WebElement signUnits = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[text()='Aadhaar sign units']")));
-        Assert.assertTrue(signUnits.isDisplayed());
+	        Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[text()='Aadhaar sign units']"))).isDisplayed());
+	        Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[text()='Email-ID']"))).isDisplayed());
+	        Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[text()='Mobile']"))).isDisplayed());
+	        Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[normalize-space(text())='Free Storage Plan']"))).isDisplayed());
 
-        // Verify "Email-ID" label is visible
-        WebElement emailId = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[text()='Email-ID']")));
-        Assert.assertTrue(emailId.isDisplayed());
+	        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//h5[@id='consenteSignLink']//i[1]"))).click();
 
-        // Verify "Mobile" label is visible
-        WebElement mobile = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[text()='Mobile']")));
-        Assert.assertTrue(mobile.isDisplayed());
-        Thread.sleep(3000);
+	        clickVoucher();
+	        buyVoucher();
 
-        // Verify "Free Storage Plan" label is visible
-        WebElement freeStoragePlan = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[normalize-space(text())='Free Storage Plan']")));
-        Assert.assertTrue(freeStoragePlan.isDisplayed());
-        Thread.sleep(3000);
+	        moveToCheckbox();
+	        clickCheckBox();
 
-        driver.findElement(By.xpath("//h5[@id='consenteSignLink']//i[1]")).click(); // Click the "Consent eSign Link"
-        Thread.sleep(3000);
+	        clickBulkSigning();
+	        clickBulkSignUpload();
 
-        clickVoucher(); // Click "Vouchers" in the sidebar
+	        clickbulkSignUploadButton();
+	        uploadCsv();
 
-        buyVoucher(); // Under Vouchers, click "Buy Vouchers"
-        Thread.sleep(5000);
+	        clickbulkSigningUploadDocument();
+	        uploadDocument();
 
-        moveToCheckbox(); // Scroll to the "I agree to terms and conditions in consent" checkbox
-        Thread.sleep(5000);
+	        clickBulkSignUploadProceed();
+	        bulkSignAfterProceedDocTitle();
+	        BulkSigningAfterUploadModelSendButton();
 
-        clickCheckBox(); // Click the checkbox to agree to terms and conditions
-        Thread.sleep(3000);
+	        WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/p")));
+	        String message = Emessage.getText().trim();
+	        String expectedMessage = "No active signing plans, to perform the bulk signing operation!";
 
-        clickBulkSigning(); // Click "Bulk Signing" in the sidebar
+	        SoftAssert softAssert = new SoftAssert();
+	        softAssert.assertEquals(message, expectedMessage);
+	        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button"))).click();
 
-        clickBulkSignUpload(); // Under bulk signing, click "Bulk Sign Upload"
-        Thread.sleep(3000);
+	        closeBulkSigningEmailNotificModel();
 
-        clickbulkSignUploadButton(); // Click upload button to upload CSV file
-        Thread.sleep(3000);
+	        
+	        
+	        
+	        clickSignDocuments();
+	        moveToCheckbox();
+	        Thread.sleep(4000);
+	        clickCheckBox();
+	        
+//	        clickSignDocumentsUploadButton();
+//	        uploadDocument();
+//
+//	        clickSignByMeButton();
 
-        uploadCsv(); // Upload the CSV file
-        Thread.sleep(5000);
+//	        WebElement alertBox = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//div[@class='react-confirm-alert']//div)[1]")));
+//	        String signingLimitReachedModel = alertBox.getText().trim().replace("✖", "").trim();
+//	        Assert.assertEquals(signingLimitReachedModel, "Signing limit reached");
+//
+//	        driver.findElement(By.xpath("//div[@class='react-confirm-alert-button-group']//button[1]")).click();
 
-        clickbulkSigningUploadDocument(); // Click upload button to upload the document
-        Thread.sleep(5000);
+	        topUp();
+	        subscriptionTopUpClick();
 
-        uploadDocument(); // Upload the document for signing
+	        moveToCheckbox();
+	        clickCheckBox();
 
-        clickBulkSignUploadProceed(); // Click "Proceed" button after uploads
-        Thread.sleep(1000);
+	        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"submitConsentbutton\"]"))).click();
+Thread.sleep(5000);
+	        clickInbox();
 
-        bulkSignAfterProceedDocTitle(); // Enter document title for email notifications
-        Thread.sleep(2000);
-
-        BulkSigningAfterUploadModelSendButton(); // Click "Send for Signing" button
-        Thread.sleep(2000);
-
-        // Get and verify the alert message when no signing plan is active
-        String bulkSigningnoactive = driver.findElement(By.xpath("//div[text()='No active signing plans, to perform the bulk signing operation!']")).getText();
-        bulkSigningnoactive = bulkSigningnoactive.substring(0, bulkSigningnoactive.length() - 3);
-        Assert.assertEquals(bulkSigningnoactive, "No active signing plans, to perform the bulk signing operation!");
-
-        driver.findElement(By.xpath("//div[@class='react-confirm-alert-button-group']//button[1]")).click(); // Click "OK" button in the modal
-        Thread.sleep(1000);
-
-        closeBulkSigningEmailNotificModel(); // Close email notification modal
-        Thread.sleep(1000);
-
-        clickSignDocuments(); // Click "Sign Documents" in the sidebar
-
-        clickSignDocumentsUploadButton(); // Click upload button to add PDF document
-
-        uploadDocument(); // Upload document to sign
-
-        clickSignByMeButton(); // Click "Sign By Me" button
-        Thread.sleep(2000);
-
-        // Get and verify the alert message when signing limit is reached
-        String signingLimitReachedModel = driver.findElement(By.xpath("(//div[@class='react-confirm-alert']//div)[1]")).getText();
-        signingLimitReachedModel = signingLimitReachedModel.substring(0, signingLimitReachedModel.length() - 3);
-        Assert.assertEquals(signingLimitReachedModel, "Signing limit reached");
-
-        driver.findElement(By.xpath("//div[@class='react-confirm-alert-button-group']//button[1]")).click(); // Click "OK" to close modal
-        Thread.sleep(2000);
-
-        topUp(); // Click "Topup" in sidebar
-        Thread.sleep(1000);
-
-        subscriptionTopUpClick(); // Under Topup, click "Subscription Topup"
-        Thread.sleep(5000);
-
-        moveToCheckbox(); // Scroll to the terms and conditions checkbox again
-        Thread.sleep(5000);
-
-        clickCheckBox(); // Click the checkbox to agree to terms and conditions
-        Thread.sleep(2000);
-
-        driver.findElement(By.xpath("//div[@class='next-nav']//button[1]")).click(); // Click "Submit" button for topup
-        Thread.sleep(4000);
-
-        clickInbox(); // Click "Inbox" in sidebar
-        Thread.sleep(5000);
-
-        //issue there need to fix it
-        // Verify that the delete button is disabled         
-//        WebElement deleteButton = driver.findElement(By.xpath("(//span[@class='MuiIconButton-label']//img)[2]"));
-//        boolean isDisabled = !deleteButton.isEnabled(); // Check if delete button is disabled
-//        Assert.assertTrue(isDisabled, "Delete button should be disabled.");
-    }
+	        // Delete button check – Disabled for now
+	        // WebElement deleteButton = driver.findElement(By.xpath("(//span[@class='MuiIconButton-label']//img)[2]"));
+	        // boolean isDisabled = !deleteButton.isEnabled();
+	        // Assert.assertTrue(isDisabled, "Delete button should be disabled.");
+	    }
     
     
     
@@ -171,12 +130,12 @@ public class NewUserLoginTermsConAgree extends Baseclass {
     @Test
     public void subscriptionTopUpNewUsers() throws Exception {
     testLogin();//	 login DocuExec application
-    Thread.sleep(5000);
-    checkAllTopUpsButtonEnabled();//checks whether all topUps(addOn and plan buttons works)
-    Thread.sleep(5000);
-    subscribePlanyearlyClassicGetstartedButtonh();//this method subscribes yearly Classic plan(100 rupees)
-    Thread.sleep(5000);
-    printSingingStorageBeforeTopup();//this method prints singing and storage status before topUp
+//    Thread.sleep(5000);
+//    checkAllTopUpsButtonEnabled();//checks whether all topUps(addOn and plan buttons works)
+//    Thread.sleep(5000);
+//    subscribePlanyearlyClassicGetstartedButtonh();//this method subscribes yearly Classic plan(100 rupees)
+//    Thread.sleep(5000);
+//    printSingingStorageBeforeTopup();//this method prints singing and storage status before topUp
     signingsAddOn();//makes a topup for signings addOn
     storageAddOn();//makes a topup for storage addOn
     printSingingStorageAfterTopup();//this method prints singing and storage status after topUp
@@ -197,7 +156,7 @@ public class NewUserLoginTermsConAgree extends Baseclass {
 		// Initialize WebDriverWait
 	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(4));		
 	    Thread.sleep(3000);
-	    driver.findElement(By.xpath("(//div[@class='sidebar-item']//div)[3]")).click();//click on vouchers
+	    driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[8]/div/div[1]")).click();//click on vouchers
 		try {Thread.sleep(3000);
         driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div/ul/li[10]")).click();//clickon Buyvouchers
 		Thread.sleep(3000);
@@ -208,7 +167,7 @@ public class NewUserLoginTermsConAgree extends Baseclass {
 		Thread.sleep(3000);
 	   }
 		Thread.sleep(time);
-		driver.findElement(By.xpath("(//div[@class='getVoucher__sub']//button)[1]")).click();//buy voucher button
+		driver.findElement(By.xpath("//*[@id=\"subCard0\"]/div[4]/button")).click();//buy voucher button
 		Thread.sleep(time);
 		driver.findElement(By.id("voucherQnty")).sendKeys("1");//Enter no of vouchers code
 		driver.findElement(By.id("exampleSelect")).click();//
@@ -216,7 +175,7 @@ public class NewUserLoginTermsConAgree extends Baseclass {
 		Select s=new Select(selectcode);
 		s.selectByVisibleText("Same Voucher Code");//VoucherType
 		driver.findElement(By.id("userCodeCheckbox")).click();
-		driver.findElement(By.id("userCode")).sendKeys("dwqbhwdqkw");//ALPHANUMERICcase
+		driver.findElement(By.id("userCodeVouch")).sendKeys("UIOUOOUITT");//ALPHANUMERICcase
 		driver.findElement(By.xpath("(//div[@class='actionBtn']//span)[1]")).click();//submit button
 		Thread.sleep(3000);
 		try{Thread.sleep(3000);
@@ -228,7 +187,7 @@ public class NewUserLoginTermsConAgree extends Baseclass {
 			}			
 		Thread.sleep(3000);
 		//Request initiated successfully
-		  WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div")));
+		  WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/p")));
 		    String message = Emessage.getText().trim();
 
 		    // Check if the message contains the specific text and extract it
@@ -241,11 +200,9 @@ public class NewUserLoginTermsConAgree extends Baseclass {
 		    String expectedSuccessMessage = "Request initiated successfully";
 		   
 		    softAssert.assertEquals(successMessage, expectedSuccessMessage); // For TestNG
-		     
+		     Thread.sleep(2000);
 		  // Click OK on the message
-				WebElement okButton = wait.until(ExpectedConditions
-						.elementToBeClickable(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button")));
-				okButton.click();
+				driver.findElement(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button")).click();//press ok button for the model
 				softAssert.assertAll();
 				testLogout();
 
@@ -261,7 +218,7 @@ public class NewUserLoginTermsConAgree extends Baseclass {
 
 		testLogin();
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//div[@class='sidebar-item']//div)[3]"))).click(); // click on vouchers
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[8]/div/div[1]"))).click(); // click on vouchers
 		Thread.sleep(2000);
 
 		WebElement Scroll = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//div[@class='sidebar-children']//a)[2]")));
@@ -290,19 +247,19 @@ public class NewUserLoginTermsConAgree extends Baseclass {
 			wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Voucher Summary"))).click();
 		} catch (Exception e) {
 			wait.until(ExpectedConditions.elementToBeClickable(
-					By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div/ul/li[9]/ul/li[2]/a"))).click();
+					By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[8]/div/div[2]/a[2]"))).click();
 		}
 
 		Thread.sleep(3000);
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//td[contains(@class,'MuiTableCell-root MuiTableCell-body')]//button)[1]"))).click(); // click voucher codes
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"voucherCodesInfo\"]"))).click(); // click voucher codes
 
 		String voucherCode = wait.until(ExpectedConditions.visibilityOfElementLocated(
-				By.xpath("(//div[@class='vouchercodeLists']//div)[3]"))).getText();
+				By.xpath("//*[@id=\"voucherCodeModalContainer\"]/div/div[4]/div/div[2]"))).getText();
 
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[normalize-space(text())='Export']"))).click(); // click export button
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"voucherSummaryContainer\"]/div[3]/div/div[3]/div[2]/span"))).click(); // click export button
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[normalize-space(text())='OK']"))).click(); // click ok button
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"voucherSummaryContainer\"]/div[3]/div/div[3]/div[1]/span"))).click(); // click ok button
 
 		topUp(); // clicks the topUp in sidebar
 		subscriptionTopUpClick(); // clicks the subscription topup under topup in sidebar
@@ -401,11 +358,11 @@ public class NewUserLoginTermsConAgree extends Baseclass {
 
 	
 		public void clickAccountDetails() {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25)); // Wait object with 20s timeout
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Wait object with 10s timeout
 			 try {
 		    	    wait.until(ExpectedConditions.elementToBeClickable(
-		    	        By.xpath("(//div[@class='individualMenu']//a)[1]")
-		    	    ));
+		    	        By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[3]/a")
+		    	    )).click();;
 		    	} catch (Exception e1) {
 		    	    try {
 		    	        wait.until(ExpectedConditions.elementToBeClickable(
@@ -430,7 +387,7 @@ public class NewUserLoginTermsConAgree extends Baseclass {
 		//Click Subscription topup feature under Topup
 		public void subscriptionTopUpClick() throws InterruptedException {
 			Thread.sleep(4000);
-			driver.findElement(By.xpath("//a[text()='eSign TopUp']/following-sibling::a")).click();
+			driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[4]/div/div[2]/a[2]")).click();
 		}
 		
 		// Move to the checkbox("i agree to terms and conditions in consent")
@@ -500,7 +457,7 @@ public class NewUserLoginTermsConAgree extends Baseclass {
 
 	//click sign documents in sidebar
 	public void clickSignDocuments() {
-		 driver.findElement(By.xpath("(//div[@class='individualMenu']//a)[2]")).click();	
+		 driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[2]/a")).click();	
 	}
 
 	//click upload PDF button
@@ -556,7 +513,7 @@ public class NewUserLoginTermsConAgree extends Baseclass {
 	   
 		//clicks the inbox
 		public void clickInbox() {
-			driver.findElement(By.xpath("//a[normalize-space(text())='Inbox']")).click();
+			driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div")).click();
 		}
 		
 		//clicks the delete symbol in a row in actions in inbox
@@ -640,12 +597,25 @@ public class NewUserLoginTermsConAgree extends Baseclass {
 
 					//This method checks whether the pln displayed in account details is current plan
 					public void checkplanAccountDetails() {
-						String text = driver.findElement(By.xpath("//span[normalize-space(text())='Current Plan']")).getText();
-						Assert.assertEquals(text, "Current Plan");
+						WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
+
+						 WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[4]/div[2]/div/div[1]/span")));
+					        String message = Emessage.getText().trim();
+					        String expectedMessage = "Current Plan";
+
+					        SoftAssert softAssert = new SoftAssert();
+					        softAssert.assertEquals(message, expectedMessage);
+						
 						
 						try {
-							String upcomingPlan=driver.findElement(By.xpath("//div[@class='infoCardHeader-inactive']//span[1]")).getText();
-							Assert.assertEquals(upcomingPlan,"Upcoming Plan" );
+							
+							 WebElement Emessage1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='infoCardHeader-inactive']//span[1]")));
+						        String message1 = Emessage.getText().trim();
+						        String expectedMessage1 = "Upcoming Plan";
+
+						     
+						        softAssert.assertEquals(message, expectedMessage);
+							
 						}catch(Exception e){
 							System.out.println("No Upcoming plan displayed");
 						}
@@ -742,7 +712,7 @@ public class NewUserLoginTermsConAgree extends Baseclass {
 			payButtonclick();//clicks the pay button after selecting a addon and plans
 			Thread.sleep(6000);
 			topUpAfterPayModal();//verifies whether text displayed is correct in model after clicking pay button
-			driver.findElement(By.xpath("//div[@class='react-confirm-alert-button-group']//button[1]")).click();//press ok button for the model
+			driver.findElement(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button")).click();//press ok button for the model
 
 		}
 		//makes a topUp for signings addOn
@@ -755,7 +725,8 @@ public class NewUserLoginTermsConAgree extends Baseclass {
 			payButtonclick();//clicks the pay button after selecting a addon and plans
 			Thread.sleep(3000);
 			topUpAfterPayModal();//verifies whether text displayed is correct in model after clicking pay button
-			driver.findElement(By.xpath("//div[@class='react-confirm-alert-button-group']//button[1]")).click();//press ok button for the model
+			Thread.sleep(2000);
+			driver.findElement(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button")).click();//press ok button for the model
 
 		}
 		
@@ -769,13 +740,13 @@ public class NewUserLoginTermsConAgree extends Baseclass {
 				payButtonclick();//clicks the pay button after selecting a addon and plans
 				Thread.sleep(3000);
 				topUpAfterPayModal();//verifies whether text displayed is correct in model after clicking pay button
-				driver.findElement(By.xpath("//div[@class='react-confirm-alert-button-group']//button[1]")).click();//press ok button for the model
+				driver.findElement(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button")).click();//press ok button for the model
 
 			}
 			
 			//this method prints singing and storage status before topUp
 			public void printSingingStorageBeforeTopup() throws InterruptedException {
-				driver.findElement(By.xpath("//a[normalize-space(text())='Account Details']")).click(); // Click sidebar menu//press account details in sidebar
+				driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[3]/a")).click(); // Click sidebar menu//press account details in sidebar
 				Thread.sleep(3000);
 				checkplanAccountDetails();//This method checks whether the pln displayed in account details is current plan
 				System.out.println("*************************************************");

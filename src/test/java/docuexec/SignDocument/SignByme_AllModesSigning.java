@@ -649,7 +649,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 		}
 	}
 
-	private void uploadFile(String filePath) {
+	public void uploadFile(String filePath) {
 		try {
 			Thread.sleep(2000);
 			// Set the clipboard with file location
@@ -676,7 +676,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 		}
 	}
 
-	public static void enterCustomPages(String pages) throws Exception {
+	public  void enterCustomPages(String pages) throws Exception {
 		Thread.sleep(4000);
 		try {
 			driver.findElement(By.xpath("//button[normalize-space(text())='Custom pages']")).click();
@@ -705,7 +705,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 
 	}
 
-	public static void enterCurrentPage() throws Exception {
+	public  void enterCurrentPage() throws Exception {
 		Thread.sleep(4000);
 		try {
 			driver.findElement(By.xpath(
@@ -720,7 +720,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 		seal();
 	}
 
-	public static void enterAllPage() throws Exception {
+	public  void enterAllPage() throws Exception {
 		Thread.sleep(4000);
 		try {
 			driver.findElement(By.cssSelector("#allPage")).click();
@@ -740,7 +740,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 
 	}
 
-	public static void changeSignature() {
+	public  void changeSignature() {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
 		WebElement signaturePadBtn = wait
@@ -760,12 +760,12 @@ public class SignByme_AllModesSigning extends Baseclass {
 		adoptUploadBtn.click();
 	}
 
-	private static void handleConfirmation() throws InterruptedException {
+	public void handleConfirmation() throws InterruptedException {
 		try {
 			Thread.sleep(2000); // Small wait to allow the dialog to appear
-			driver.findElement(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button[1]")).click(); // Click
+			driver.findElement(By.xpath("/html/body/div[5]/div/div[2]/div/div/div/div[2]/button[2]")).click(); // Click
 																												// OK in
-																												// confirmation
+																		// confirmation
 		} catch (NoSuchElementException e) {
 			Thread.sleep(4000);
 			driver.findElement(By.className("confirmBtn")).click();
@@ -775,7 +775,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 		}
 	}
 
-	public static void seal() throws Exception {
+	public  void seal() throws Exception {
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("//*[@id=\"docuPageTest1\"]")).click();
 		Thread.sleep(2000);
@@ -802,7 +802,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 	}
 
 	@Test
-	public static void performOtpSigning() throws InterruptedException {
+	public  void performOtpSigning() throws InterruptedException {
 		Thread.sleep(2000);
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
@@ -830,6 +830,9 @@ public class SignByme_AllModesSigning extends Baseclass {
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[normalize-space(text())='Proceed']")));
 		ProceedButton.click();
 
+		WebElement checkbox=wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//*[@id=\"TandCID\"]")));
+		checkbox.click();
 		try {
 			
 //			WebElement checkbox=wait.until(ExpectedConditions
@@ -853,7 +856,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 	}
 
 	// Method to perform electronic signing actions
-	private void performElectronicSigning() throws Exception {
+	public  void performElectronicSigning() throws Exception {
 		Thread.sleep(2000);
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		JavascriptExecutor js = (JavascriptExecutor) driver;// scrolling to below
@@ -864,7 +867,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 			electronicModeRadio.click();
 		} catch (Exception e) {
 			WebElement electronicModeRadioFallback = wait
-					.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"electronicModeRadio\"]")));
+					.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"signSubmit\"]")));
 			electronicModeRadioFallback.click();
 		}
 
@@ -875,16 +878,16 @@ public class SignByme_AllModesSigning extends Baseclass {
 
 		try {
 			
-//			WebElement checkbox=wait.until(ExpectedConditions
-//				.elementToBeClickable(By.xpath("(/html/body/div[2]/div/div/div/div[4]/div[1]/div/label/input)[1]")));
-//		checkbox.click();
+			WebElement checkbox=wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//*[@id=\"TandCID\"]")));
+		checkbox.click();
 			WebElement proceed = wait.until(ExpectedConditions
 					.elementToBeClickable(By.xpath("//span[normalize-space(text())='PROCEED']")));
 			proceed.click();
 		} catch (Exception e) {
-//			WebElement checkbox=wait.until(ExpectedConditions
-//					.elementToBeClickable(By.xpath("(/html/body/div[2]/div/div/div/div[4]/div[1]/div/label/input)[1]")));
-//			checkbox.click();
+			WebElement checkbox=wait.until(ExpectedConditions
+					.elementToBeClickable(By.xpath("(/html/body/div[2]/div/div/div/div[4]/div[1]/div/label/input)[1]")));
+			checkbox.click();
 			WebElement proceed = wait.until(ExpectedConditions
 					.elementToBeClickable(By.xpath("(//span[@class='btnLable'])[1]")));
 			proceed.click();
@@ -896,7 +899,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 	}
 	
 	// Method to perform DSC signing actions
-		private void performDSCSigning() throws Exception {
+		public void performDSCSigning() throws Exception {
 			Thread.sleep(2000);
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 			JavascriptExecutor js = (JavascriptExecutor) driver;// scrolling to below
@@ -936,7 +939,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 
 			}
 		}
-		private void performAadharSigning() throws Exception {
+		public void performAadharSigning() throws Exception {
 		    Thread.sleep(2000);
 		    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		    JavascriptExecutor js = (JavascriptExecutor) driver;  // Scrolling down
@@ -982,13 +985,13 @@ public class SignByme_AllModesSigning extends Baseclass {
 		    Thread.sleep(60000);
 		}
 
-	private void scrollDown(int pixels) {
+	public void scrollDown(int pixels) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollBy(0," + pixels + ")");
 	}
 
 	// Method to click Finish button
-	private void clickFinishButton() throws InterruptedException {
+	public void clickFinishButton() throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		try {
 			WebElement completeSigningBtn = wait
@@ -1010,7 +1013,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 	}
 
 	// Method to check in inbox
-	private void clickInboxLink() throws InterruptedException {
+	public void clickInboxLink() throws InterruptedException {
 		
 		Thread.sleep(2000);
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -1031,7 +1034,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 	}
 
 	// Method signature details
-	private void sealpositionsdata() throws Exception {
+	public void sealpositionsdata() throws Exception {
 		Thread.sleep(5000);
 		// click i button
 		driver.findElement(By.cssSelector("#signPageSelectDiv > div.item-text > svg")).click();
@@ -1049,10 +1052,10 @@ public class SignByme_AllModesSigning extends Baseclass {
 			driver.findElement(By.cssSelector("button.discardAndSign.hoverclass")).click();// click on preview btn
 		} catch (Exception e) {
 			Thread.sleep(3000);
-			driver.findElement(By.xpath("//button[@class='discardAndSign hoverclass']")).click();// click on preview btn
+			driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[4]/div[1]/div[1]/div/div[2]/button[2]")).click();// click on preview btn
 		}
 		Thread.sleep(3000);
-		driver.findElement(By.xpath("(//div[@class='furturAction']//button)[2]")).click();// clicking
+		driver.findElement(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button[1]")).click();// clicking
 																												// alert
 		Thread.sleep(3000);
 
@@ -1097,7 +1100,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 			driver.findElement(By.xpath("//button[@class='discardSign hoverclass']")).click();// click on discard
 		}
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("(//div[@class='furturAction']//button)[3]")).click();
+		driver.findElement(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button[1]")).click();
 		// click alert okk
 	}
 }

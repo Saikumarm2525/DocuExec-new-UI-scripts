@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Login Feature Suite">
+ <listeners>
+        <listener class-name="docuexec.EnduserAllModules.MyTestListener"/>
+    </listeners>
+    <test name="NewUserLogin Test">
+        <classes>
+            <class name="docuexec.EnduserAllModules.UserTopUp">
+                <methods>
+                    <include name="subscriptionTopUpNewUsers" />
+                   <include name="subscriptionTopUpOldUsers" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

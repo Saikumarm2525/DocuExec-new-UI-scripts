@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="PendingAction_OTPSuite">
+
+  <listeners>
+        <listener class-name="docuexec.EnduserAllModules.MyTestListener"/>
+    </listeners>
+      <test name="O_Finish_CurrentPage">
+        <classes>
+<class name="docuexec.EnduserAllModules.PendingAction">
+                <methods>
+                    <include name="O_Finish_PendingActionOnCurrentPage"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="O_Finish_AllPages">
+        <classes>
+            <class name="docuexec.EnduserAllModules.PendingAction">
+                <methods>
+                    <include name="O_Finish_PendingActionOnAllPages"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="O_Finish_CustomPages">
+        <classes>
+            <class name="docuexec.EnduserAllModules.PendingAction">
+                <methods>
+                    <include name="O_Finish_PendingActionOnCustomPages"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="O_Discard_CurrentPage">
+    <classes>
+        <class name="docuexec.EnduserAllModules.PendingAction">
+            <methods>
+                <include name="O_Discard_PendingActionOnCurrentPage"/>
+            </methods>
+        </class>
+    </classes>
+</test>
+
+<test name="O_Discard_AllPages">
+    <classes>
+        <class name="docuexec.EnduserAllModules.PendingAction">
+            <methods>
+                <include name="O_Discard_PendingActionOnAllPages"/>
+            </methods>
+        </class>
+    </classes>
+</test>
+
+<test name="O_Discard_CustomPages">
+    <classes>
+        <class name="docuexec.EnduserAllModules.PendingAction">
+            <methods>
+                <include name="O_Discard_PendingActionOnCustomPages"/>
+            </methods>
+        </class>
+    </classes>
+   
+</test>
+<test name="O_Discard_CurrentPage">
+    <classes>
+        <class name="docuexec.EnduserAllModules.PendingAction">
+            <methods>
+                <include name="O_DSA_PendingActionOnAllPages"/>
+            </methods>
+        </class>
+    </classes>
+</test>
+
+<test name="O_Discard_AllPages">
+    <classes>
+        <class name="docuexec.EnduserAllModules.PendingAction">
+            <methods>
+                <include name="O_DSA_PendingActionOnCurrentPage"/>
+            </methods>
+        </class>
+    </classes>
+</test>
+
+<test name="O_Discard_CustomPages">
+    <classes>
+        <class name="docuexec.EnduserAllModules.PendingAction">
+            <methods>
+                <include name="O_DSA_PendingActionOnCustomPages"/>
+            </methods>
+        </class>
+    </classes>
+</test>
+</suite>

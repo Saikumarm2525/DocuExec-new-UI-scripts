@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="DSC_OTP_DifferentPageSigningTestSuite">
+  <listeners>
+        <listener class-name="docuexec.EnduserAllModules.MyTestListener"/>
+    </listeners>
+    <test thread-count="1" name="Test_DSCDiscard_DScurrentDAS">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Watermarkpdf">
+                <methods>
+                    <include name="DScurrentDAS" />
+                    <include name="close" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_DSCDiscard_DSallDAS">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Watermarkpdf">
+                <methods>
+                    <include name="DSallDAS" />
+                    <include name="close" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_DSCDiscard_DScustomDAS">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Watermarkpdf">
+                <methods>
+                    <include name="DScustomDAS" />
+                    <include name="close" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_DSCDiscard_DScurrentdiscard">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Watermarkpdf">
+                <methods>
+                    <include name="DScurrentdiscard" />
+                    <include name="close" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_DSCDiscard_DSAlldiscard">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Watermarkpdf">
+                <methods>
+                    <include name="DSAlldiscard" />
+                    <include name="close" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_DSCDiscard_DScustomdiscard">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Watermarkpdf">
+                <methods>
+                    <include name="DScustomdiscard" />
+                    <include name="close" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_DSCFinish_DSTestcurrentPage">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Watermarkpdf">
+                <methods>
+                    <include name="DSTestcurrentPage" />
+                    <include name="close" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_DSCFinish_DSTestAllPage">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Watermarkpdf">
+                <methods>
+                    <include name="DSTestAllPage" />
+                    <include name="close" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_DSCFinish_DSTestcustomPage">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Watermarkpdf">
+                <methods>
+                    <include name="DSTestcustomPage" />
+                    <include name="close" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

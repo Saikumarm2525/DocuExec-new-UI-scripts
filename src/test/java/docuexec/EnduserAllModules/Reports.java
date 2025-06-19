@@ -3,6 +3,7 @@ package docuexec.EnduserAllModules;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -21,11 +22,11 @@ public class Reports extends Baseclass {
 		Thread.sleep(2000);
 		driver.findElement(By.linkText("Payment History")).click();//click on paymenthistory
 		WebElement paymentDetails = wait.until(ExpectedConditions.visibilityOfElementLocated(
-			    By.xpath("(//*[@id=\"paymentReportContainer\"]/div[2]/div/div[1]/div[1]/span)[1]")
+			    By.xpath("//*[@id=\"paymentReportContainer\"]/div[2]/div/div[1]/div[1]/span")
 			));	//wait untill payment details	
-		driver.findElement(By.xpath("(//*[@id=\"paymentReportContainer\"]/div[2]/div/div[2]/div/div/div/table/tbody/tr[1]/td[6])[1]")).click();//download pdf
+		driver.findElement(By.xpath("//*[@id=\"invoicePDFBttn\"]")).click();//download pdf
 		Thread.sleep(3000);
-		driver.quit();
+//		driver.quit();
 		
 	}
 
@@ -41,9 +42,18 @@ public class Reports extends Baseclass {
 	
 	driver.findElement(By.linkText("Transaction History")).click();//click on transaction summary
 	Thread.sleep(2000);
-	WebElement transactionDetails = wait.until(ExpectedConditions.visibilityOfElementLocated(
-		    By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[2]/div/div[1]/div[1]/span")
-		));
+	for (int i = 0; i < 3; i++) {
+	    try {
+	        WebElement transactionDetails = wait.until(ExpectedConditions
+	            .visibilityOfElementLocated(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[2]/div/div[1]/div[1]/span")));
+	        
+	        String detailsText = transactionDetails.getText(); // or any interaction
+	        break; // success
+	    } catch (StaleElementReferenceException e) {
+	        Thread.sleep(1000); // wait and retry
+	    }
+	}
+
 	driver.findElement(By.xpath("//*[@id=\"summaryPDFBttn\"]")).click();//download pdf
 	}
 }

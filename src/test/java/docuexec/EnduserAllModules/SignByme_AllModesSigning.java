@@ -15,18 +15,22 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
+@Listeners(MyTestListener.class)
 public class SignByme_AllModesSigning extends Baseclass {
 	@Test
 
 	public void OcurrentDAS() throws Exception {
 		testLogin();
-		Thread.sleep(4000);
+		Thread.sleep(2000);
 		signDocument();
 		enterCurrentPage();
 //    	sealpositionsdata();
 		performOtpSigning();
+		Thread.sleep(3000);
 		DiscardandSign();
 		performOtpSigning();
 		scrollDown(50000);
@@ -42,7 +46,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 
 	public void OallDAS() throws Exception {
 		testLogin();
-		Thread.sleep(4000);
+		Thread.sleep(2000);
 		signDocument();
 		enterAllPage();
 //    	sealpositionsdata();
@@ -57,14 +61,16 @@ public class SignByme_AllModesSigning extends Baseclass {
 	    testLogout();
 	}
 
+	
 	@Test
 	public void OcustomDAS() throws Exception {
 		testLogin();
-		Thread.sleep(4000);
+		Thread.sleep(2000);
 		signDocument();
 		enterCustomPages("1,2");
 //    	sealpositionsdata();
 		performOtpSigning();
+		Thread.sleep(1000);
 		DiscardandSign();
 		performOtpSigning();
 		scrollDown(50000);
@@ -83,17 +89,15 @@ public class SignByme_AllModesSigning extends Baseclass {
 		testLogin();
 		Thread.sleep(4000);
 		signDocument();
-
 		enterCurrentPage();
 //    	sealpositionsdata();
 		performOtpSigning();
 		Discard();
 		Thread.sleep(2000);
 		testLogout();
-
 	}
 
-	
+                    	       
 
 	@Test
 
@@ -240,7 +244,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 		enterCurrentPage();
 		performElectronicSigning();
 		Thread.sleep(4000);
-		scrollDown(-500);
+		
 		Finish();
 	    Thread.sleep(2000);
 	    testLogout();
@@ -306,6 +310,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 
 	}
 
+	
 	@Test
 	public void OTestcustomPage() throws Exception {
 		testLogin();
@@ -404,6 +409,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 	    testLogout();
 	}
 
+	
 	@Test
 	public void DSCcustomdiscard() throws Exception {
 	    testLogin();
@@ -495,6 +501,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 	    scrollDown(5000);
 	    scrollDown(5000);
 	    scrollDown(5000);
+	    Thread.sleep(10000);
 	    Finish();
 	    Thread.sleep(2000);
 	    testLogout();
@@ -568,7 +575,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 	    Thread.sleep(2000);
 	    enterCurrentPage();
 	    performAadharSigning();  // Replaced with performAadharSigning
-	    Thread.sleep(4000);
+	 
 	    scrollDown(-500);
 	    Finish();
 	    Thread.sleep(2000);
@@ -608,11 +615,11 @@ public class SignByme_AllModesSigning extends Baseclass {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
-			Thread.sleep(3000);
-			// Click on the "Sign Document" button
-			WebElement signDocumentButton = wait
-					.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[normalize-space(text())='Sign Document']")));
-			signDocumentButton.click();
+//			Thread.sleep(3000);
+//			// Click on the "Sign Document" button
+//			WebElement signDocumentButton = wait
+//					.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[normalize-space(text())='Sign Document']")));
+//			signDocumentButton.click();
 
 			Thread.sleep(2000);
 			// Click on the "Upload PDF" button
@@ -763,7 +770,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 	private static void handleConfirmation() throws InterruptedException {
 		try {
 			Thread.sleep(2000); // Small wait to allow the dialog to appear
-			driver.findElement(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button[1]")).click(); // Click
+			driver.findElement(By.xpath("/html/body/div[5]/div/div[2]/div/div/div/div[2]/button[2]/span")).click(); // Click
 																												// OK in
 																												// confirmation
 		} catch (NoSuchElementException e) {
@@ -801,16 +808,17 @@ public class SignByme_AllModesSigning extends Baseclass {
 
 	}
 
-	@Test
+
 	public static void performOtpSigning() throws InterruptedException {
 		Thread.sleep(2000);
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
 		driver.findElement(By.id("otpSignModeRadio")).click();
 		driver.findElement(By.id("generateOtpBtn")).click();// generate OTP
-		Thread.sleep(3000);
-		driver.findElement(By.name("mobileotp")).sendKeys("654321");// mobile otp enter
-		driver.findElement(By.name("emailotp")).sendKeys("654321");
+		Thread.sleep(4000);
+		driver.findElement(By.xpath("//*[@id=\"otpmodalrow\"]/div[1]/input")).sendKeys("654321");// mobile otp enter
+		Thread.sleep(4000);
+		driver.findElement(By.xpath("//*[@id=\"otpmodalrow\"]/div[2]/input")).sendKeys("654321");
 		Thread.sleep(2000);
 		JavascriptExecutor js = (JavascriptExecutor) driver;// scrolling to below
 
@@ -820,9 +828,10 @@ public class SignByme_AllModesSigning extends Baseclass {
 		CancelButton.click();
 
 		driver.findElement(By.id("generateOtpBtn")).click();// generate OTP
-		Thread.sleep(3000);
-		driver.findElement(By.name("mobileotp")).sendKeys("654321");// mobile otp enter
-		driver.findElement(By.name("emailotp")).sendKeys("654321");
+		Thread.sleep(4000);
+		driver.findElement(By.xpath("//*[@id=\"otpmodalrow\"]/div[1]/input")).sendKeys("654321");// mobile otp enter
+		Thread.sleep(4000);
+		driver.findElement(By.xpath("//*[@id=\"otpmodalrow\"]/div[2]/input")).sendKeys("654321");
 		Thread.sleep(2000);
 
 		js.executeScript("window.scrollBy(0,1000)");
@@ -851,6 +860,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 
 		}
 	}
+
 
 	// Method to perform electronic signing actions
 	private void performElectronicSigning() throws Exception {
@@ -1046,13 +1056,13 @@ public class SignByme_AllModesSigning extends Baseclass {
 		Thread.sleep(3000);
 		try {
 			Thread.sleep(3000);
-			driver.findElement(By.cssSelector("button.discardAndSign.hoverclass")).click();// click on preview btn
+			driver.findElement(By.xpath("(//div[@class='furturAction']//button)[2]")).click();// click on preview btn
 		} catch (Exception e) {
 			Thread.sleep(3000);
-			driver.findElement(By.xpath("//button[@class='discardAndSign hoverclass']")).click();// click on preview btn
+			driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[4]/div[1]/div[1]/div/div[2]/button[3]")).click();// click on preview btn
 		}
 		Thread.sleep(3000);
-		driver.findElement(By.xpath("(//div[@class='furturAction']//button)[2]")).click();// clicking
+		driver.findElement(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button[1]")).click();// clicking
 																												// alert
 		Thread.sleep(3000);
 
@@ -1064,10 +1074,12 @@ public class SignByme_AllModesSigning extends Baseclass {
 		JavascriptExecutor js = (JavascriptExecutor) driver; // scrolling to below
 		js.executeScript("window.scrollBy(0,-10000)");
 		Thread.sleep(3000);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
+		
 
 		try {
 			Thread.sleep(3000);
-			driver.findElement(By.cssSelector("button.finishSign.hoverclass")).click(); // click on Finish
+			 wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("button.finishSign.hoverclass")));
 		} catch (NoSuchElementException e) {
 			try {
 				Thread.sleep(3000);
@@ -1080,7 +1092,21 @@ public class SignByme_AllModesSigning extends Baseclass {
 			}
 		}
 		Thread.sleep(4000);
-		scroll("The signed document can be downloaded from this page, or from the Inbox later.");
+		SoftAssert softAssert=new SoftAssert();
+
+//		scroll("The signed document can be downloaded from this page, or from the Inbox later.");
+		WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"multipplMsg\"]")));
+		String message = Emessage.getText().trim();
+
+		// Check if the message contains the specific text and extract it
+		String successMessage = message.contains("The signed document can be downloaded from this page, or from the Inbox later.") ? "The signed document can be downloaded from this page, or from the Inbox later."
+				: message;
+
+		System.out.println("change password:" + successMessage);
+		// Assertion to check if the success message is as expected
+		String expectedSuccessMessage = "The signed document can be downloaded from this page, or from the Inbox later.";
+
+		softAssert.assertEquals(successMessage, expectedSuccessMessage); // For TestNG
 	}
 
 	@Test
@@ -1097,7 +1123,7 @@ public class SignByme_AllModesSigning extends Baseclass {
 			driver.findElement(By.xpath("//button[@class='discardSign hoverclass']")).click();// click on discard
 		}
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("(//div[@class='furturAction']//button)[3]")).click();
+		driver.findElement(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button[1]")).click();
 		// click alert okk
 	}
 }

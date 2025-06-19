@@ -26,7 +26,7 @@ public class Baseclass {
     public String dc="https://docuxecstage.finfotech.co.in/login";
     public String p2pl="https://p2puat.finfotech.co.in/login";
     public String Stagingurl="https://docuxecstage.finfotech.co.in/login";
-    String username = "6026602660"//9011901190on uat///6011601160staging
+    String username = "6361579075"//9011901190on uat///6011601160staging
     		+ "";//"8182818282";//"8081808180";  // Replace with your username//6380695905
     String password = "Test@123";//Replace with your Password
     String profilemail="thiya@gmail.com";//provide profile mail id to perform Third party signing
@@ -36,8 +36,9 @@ public class Baseclass {
     String mob="6374899399";
     String wotp="654321";
     String vouchercode="uatst00004";//Enter Voucher Code 
-    String filePath="C:\\Users\\lavanyab.FINFOTECH\\Downloads\\Statement finvu.pdf";//Replace File path
+    String filepath="C:\\Users\\saikumarm\\Downloads\\DocuExec_TandC_doc";//Replace File path
     String tdate="11-11-2024";
+    String fileName="DocuExec_TandC_doc";
 //    String bulksigningpdffile="C:\\Users\\lavanyab.FINFOTECH\\Desktop\\Docu Exec\\bulkSigningPDF.pdf";
 //    String bulksigningcsvfile="C:\\Users\\lavanyab.FINFOTECH\\Desktop\\Docu Exec\\bulkSigningUpload.csv";
 //    String bulksigningHTMLfile="C:\\Users\\lavanyab.FINFOTECH\\Desktop\\Docu Exec\\BulkSigningHTML\\code of conduct (3).html";
@@ -108,8 +109,8 @@ public class Baseclass {
 //    	Thread.sleep(2000);
 //		driver.navigate().to(Stagingurl + "/accountInfo");
 
-		Thread.sleep(3000);
-		driver.findElement(By.xpath("//button[contains(@class,'UserDetailCustom dropdown-toggle')]")).click();//click on name
+		Thread.sleep(5000);
+		driver.findElement(By.xpath("(//div[@class='dropdown']//button)[1]")).click();//click on name
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("(//button[normalize-space(text())='Logout'])[1]")).click();//click on login
 

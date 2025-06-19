@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Test Otp signing">
+  <listeners>
+        <listener class-name="docuexec.EnduserAllModules.MyTestListener"/>
+    </listeners>
+
+    <test thread-count="1" name="Test_OTPFinish_OTestcurrentPage">
+        <classes>
+            <class name="docuexec.EnduserAllModules.SignByme_AllModesSigning">
+                <methods>
+                    <include name="OTestcurrentPage"/>
+                    <include name="close"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_OTPFinish_OTestAllPage">
+        <classes>
+            <class name="docuexec.EnduserAllModules.SignByme_AllModesSigning">
+                <methods>
+                    <include name="OTestAllPage"/>
+                    <include name="close"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_OTPFinish_OTestcustomPage">
+        <classes>
+            <class name="docuexec.EnduserAllModules.SignByme_AllModesSigning">
+                <methods>
+                    <include name="OTestcustomPage"/>
+                    <include name="close"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_OTPdandsigning_OcurrentDAS">
+        <classes>
+            <class name="docuexec.EnduserAllModules.SignByme_AllModesSigning">
+                <methods>
+                    <include name="OcurrentDAS"/>
+                    <include name="close"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_OTPdandsigning_OallDAS">
+        <classes>
+            <class name="docuexec.EnduserAllModules.SignByme_AllModesSigning">
+                <methods>
+                    <include name="OallDAS"/>
+                    <include name="close"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_OTPdandsigning_OcustomDAS">
+        <classes>
+            <class name="docuexec.EnduserAllModules.SignByme_AllModesSigning">
+                <methods>
+                    <include name="OcustomDAS"/>
+                    <include name="close"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_OTPDiscard_Ocurrentdiscard">
+        <classes>
+            <class name="docuexec.EnduserAllModules.SignByme_AllModesSigning">
+                <methods>
+                    <include name="Ocurrentdiscard"/>
+                    <include name="close"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_OTPDiscard_OAlldiscard">
+        <classes>
+            <class name="docuexec.EnduserAllModules.SignByme_AllModesSigning">
+                <methods>
+                    <include name="OAlldiscard"/>
+                    <include name="close"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test thread-count="1" name="Test_OTPDiscard_Ocustomdiscard">
+        <classes>
+            <class name="docuexec.EnduserAllModules.SignByme_AllModesSigning">
+                <methods>
+                    <include name="Ocustomdiscard"/>
+                    <include name="close"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

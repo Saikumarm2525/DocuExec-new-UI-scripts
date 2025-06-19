@@ -25,7 +25,7 @@ public class Baseclass {
     public String dc="https://docuxecstage.finfotech.co.in/login";
     public String p2pl="https://p2puat.finfotech.co.in/login";
     public String Stagingurl="https://docuxecstage.finfotech.co.in/login";
-    String username = "6026602660"//9011901190on uat///6011601160staging
+    String username = "8999999999"//9011901190on uat///6011601160staging
     		+ "";//"8182818282";//"8081808180";  // Replace with your username//6380695905
     String password = "Test@123";//Replace with your Password
     String profilemail="thiya@gmail.com";//provide profile mail id to perform Third party signing
@@ -76,7 +76,7 @@ public class Baseclass {
             Thread.sleep(2000);
             
             WebElement userProfileImage = driver.findElement(By.xpath("//span[@class='userProfile hoverclass']//img[1]"));
-            userProfileImage.click();
+//            userProfileImage.click();
 //            Assert.assertTrue(profileHeader.isDisplayed(), "Profile page header is not displayed.");
 
         } catch (Exception e) {
@@ -96,9 +96,9 @@ public class Baseclass {
 //		driver.navigate().to(Stagingurl + "/accountInfo");
 
 		Thread.sleep(3000);
-		driver.findElement(By.xpath("//button[contains(@class,'UserDetailCustom dropdown-toggle')]")).click();//click on name
+		driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[1]/div/span[1]/div/button")).click();//click on name
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("(//button[normalize-space(text())='Logout'])[1]")).click();//click on login
+		driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[1]/div/span[1]/div/div/button[2]")).click();//click on login
 
 	}
     @AfterClass

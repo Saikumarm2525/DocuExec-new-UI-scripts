@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="DeleteAccountSuite">
+   <listeners>
+        <listener class-name="docuexec.EnduserAllModules.MyTestListener"/>
+    </listeners>
+     <test name="DeleteAccountTest">
+        <classes>
+            <class name="docuexec.EnduserAllModules.Usermanagement">
+                <methods>
+                    <include name="DeleteAccount"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

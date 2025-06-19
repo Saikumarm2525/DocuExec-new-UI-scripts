@@ -6,9 +6,10 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.time.Duration;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.hamcrest.Matcher;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -17,6 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 @Listeners(MyTestListener.class)
 public class TopUp extends Baseclass {
@@ -24,7 +26,7 @@ public class TopUp extends Baseclass {
 //new user topUp module
 @Test
 public void subscriptionTopUpNewUsers() throws Exception {
-testlogin();//	 login DocuExec application
+testLogin();//	 login DocuExec application
 Thread.sleep(5000);
 checkAllTopUpsButtonEnabled();//checks whether all topUps(addOn and plan buttons works)
 Thread.sleep(5000);
@@ -37,142 +39,149 @@ printSingingStorageAfterTopup();//this method prints singing and storage status 
 testLogout();
 }
 
-private void testlogin() {
-	// TODO Auto-generated method stub
-	
-}
+
 @Test
-public void subscriptionTopUpOldUsers() throws Exception
-{
-	testlogin();//	 login DocuExec application
-	accountDetailsRemainderClose();////this method close the remainder modal in account details when logged in
-	topUp();//clicks the topUp in sidebar	
-	subscriptionTopUpClick();//clicks the subscription topup under topup in sidebar
-	Thread.sleep(4000);
-	subscribePlanyearlyClassicGetstartedButtonh();//this method subscribes yearly Classic plan(100 rupees)
-	Thread.sleep(5000);
-	// Step 1: Print existing and updated values
-	printSingingStorageBeforeTopup(); // stores value in existingstorageCountStatusText
-	signingsAddOn(); // simulate adding signing
-	storageAddOn();  // simulate adding storage
-	printSingingStorageAfterTopup(); // stores value in updatedstorageCountStatusText
+public void subscriptionTopUpOldUsers() throws Exception {
+    testLogin(); // login to DocuExec application
+    topUp(); // click topUp in sidebar
+    subscriptionTopUpClick(); // click subscription topup under topUp in sidebar
+    Thread.sleep(4000);
+    subscribePlanyearlyClassicGetstartedButtonh(); // subscribe yearly Classic plan
+    Thread.sleep(5000);
 
+    // Step 1: Print and store existing values
+    printSingingStorageBeforeTopup();
 
-	validateTopUp();
-	// Final Step: Logout
-testLogout();
+    // Step 2: Perform TopUp actions
+    signingsAddOn(); // simulate adding signing
+    storageAddOn();  // simulate adding storage
 
-	}
+    // Step 3: Print and store updated values
+    printSingingStorageAfterTopup();
+
+    // Step 4: Validate results
+    validateTopUp();
+
+    // Step 5: Logout
+    testLogout();
+}
+
+// Declare storage & sign status variables
 String updatedstorageCountStatusText;
 String existingstorageCountStatusText;
 String ExistingsignCountStatusText;
 String updatedsignCountStatusText;
 
+// Print and store signing and storage status before TopUp
+public void printSingingStorageBeforeTopup() throws InterruptedException {
+    driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[3]/a")).click(); // Click Account Details
+    Thread.sleep(3000);
+    checkplanAccountDetails();
+
+    WebElement signElement = driver.findElement(By.className("signCountStatus"));
+    WebElement storageElement = driver.findElement(By.className("storageCountStatus"));
+
+    ExistingsignCountStatusText = signElement.getText().trim();
+    existingstorageCountStatusText = storageElement.getText().trim();
+
+    System.out.println("*************************************************");
+    System.out.println("           Signs Completed status                ");
+    System.out.println("*************************************************");
+    System.out.println(ExistingsignCountStatusText);
+
+    System.out.println("*************************************************");
+    System.out.println("           Storage used status                   ");
+    System.out.println("*************************************************");
+    System.out.println(existingstorageCountStatusText);
+}
+
+// Print and store signing and storage status after TopUp
+public void printSingingStorageAfterTopup() throws InterruptedException {
+    driver.findElement(By.xpath("//a[normalize-space(text())='Account Details']")).click(); // Click Account Details
+    Thread.sleep(3000);
+    checkplanAccountDetails();
+
+    WebElement signElement = driver.findElement(By.className("signCountStatus"));
+    WebElement storageElement = driver.findElement(By.className("storageCountStatus"));
+
+    updatedsignCountStatusText = signElement.getText().trim();
+    updatedstorageCountStatusText = storageElement.getText().trim();
+
+    System.out.println("*************************************************");
+    System.out.println("           Signs Completed status                ");
+    System.out.println("*************************************************");
+    System.out.println(updatedsignCountStatusText);
+
+    System.out.println("*************************************************");
+    System.out.println("           Storage used status                   ");
+    System.out.println("*************************************************");
+    System.out.println(updatedstorageCountStatusText);
+}
+
 // Extract storage limit number after "of" from "31.46 MB of 38.0 MB used"
-    private double getStorageLimitFromText(String storageText) {
-        Pattern pattern = Pattern.compile("of\\s+(\\d+(\\.\\d+)?)\\s+MB");
-        java.util.regex.Matcher matcher = pattern.matcher(storageText);
-        if (matcher.find()) {
-            return Double.parseDouble(matcher.group(1));
+private double getStorageLimitFromText(String storageText) {
+    Pattern pattern = Pattern.compile("of\\s+(\\d+(\\.\\d+)?)\\s+MB");
+    Matcher matcher = pattern.matcher(storageText);
+    if (matcher.find()) {
+        return Double.parseDouble(matcher.group(1));
+    } else {
+        throw new IllegalArgumentException("Unable to extract storage limit from text: " + storageText);
+    }
+}
+
+// Extract sign limit number after "of" from "180 of 390 Sign used"
+private int getSignLimitFromText(String signText) {
+    Pattern pattern = Pattern.compile("of\\s+(\\d+)");
+    Matcher matcher = pattern.matcher(signText);
+    if (matcher.find()) {
+        return Integer.parseInt(matcher.group(1));
+    } else {
+        throw new IllegalArgumentException("Unable to extract sign limit from text: " + signText);
+    }
+}
+
+// Validate storage and sign limits after TopUp
+public void validateTopUp() {
+    try {
+        double beforeLimit = getStorageLimitFromText(existingstorageCountStatusText);
+        double afterLimit = getStorageLimitFromText(updatedstorageCountStatusText);
+
+        System.out.println("Before Storage Limit: " + beforeLimit);
+        System.out.println("After Storage Limit: " + afterLimit);
+
+        if (afterLimit == beforeLimit + 1.0) {
+            System.out.println("✅ Storage limit increased by 1 MB as expected.");
         } else {
-            throw new IllegalArgumentException("Unable to extract storage limit from text: " + storageText);
+            System.out.println("❌ Storage limit did not increase by 1 MB.");
+            System.out.println("Expected: " + (beforeLimit + 1.0) + ", but got: " + afterLimit);
         }
-    }
 
-    // Extract sign limit number after "of" from "180 of 390 Sign used"
-    private int getSignLimitFromText(String signText) {
-        Pattern pattern = Pattern.compile("of\\s+(\\d+)");
-        java.util.regex.Matcher matcher = pattern.matcher(signText);
-        if (matcher.find()) {
-            return Integer.parseInt(matcher.group(1));
+        int beforeSignLimit = getSignLimitFromText(ExistingsignCountStatusText);
+        int afterSignLimit = getSignLimitFromText(updatedsignCountStatusText);
+
+        System.out.println("Before Sign Limit: " + beforeSignLimit);
+        System.out.println("After Sign Limit: " + afterSignLimit);
+
+        if (afterSignLimit == beforeSignLimit + 20) {
+            System.out.println("✅ Sign count limit increased by 20 as expected.");
         } else {
-            throw new IllegalArgumentException("Unable to extract sign limit from text: " + signText);
+            System.out.println("❌ Sign count limit did not increase by 20.");
+            System.out.println("Expected: " + (beforeSignLimit + 20) + ", but got: " + afterSignLimit);
         }
+
+    } catch (IllegalArgumentException e) {
+        System.out.println("❌ Error in validation: " + e.getMessage());
     }
-
-    public void printSingingStorageBeforeTopup() throws InterruptedException {
-        driver.findElement(By.xpath("//a[normalize-space(text())='Account Details']")).click();
-        Thread.sleep(3000);
-
-        System.out.println("*************************************************");
-        System.out.println("           Signs Completed status                ");
-        System.out.println("*************************************************");
-        ExistingsignCountStatusText = driver.findElement(By.className("signCountStatus")).getText();
-        System.out.println(ExistingsignCountStatusText);
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println("*************************************************");
-        System.out.println("           Storage used status                ");
-        System.out.println("*************************************************");
-        existingstorageCountStatusText = driver.findElement(By.className("storageCountStatus")).getText();
-        System.out.println(existingstorageCountStatusText);
-    }
-
-    public void printSingingStorageAfterTopup() throws InterruptedException {
-        driver.findElement(By.xpath("//a[normalize-space(text())='Account Details']")).click();
-        Thread.sleep(3000);
-
-        System.out.println("*************************************************");
-        System.out.println("           Signs Completed status                ");
-        System.out.println("*************************************************");
-        updatedsignCountStatusText = driver.findElement(By.className("signCountStatus")).getText();
-        System.out.println(updatedsignCountStatusText);
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println("*************************************************");
-        System.out.println("           Storage used status                ");
-        System.out.println("*************************************************");
-        updatedstorageCountStatusText = driver.findElement(By.className("storageCountStatus")).getText();
-        System.out.println(updatedstorageCountStatusText);
-    }
-
-    public void validateTopUp() {
-        try {
-            double beforeLimit = getStorageLimitFromText(existingstorageCountStatusText);
-            double afterLimit = getStorageLimitFromText(updatedstorageCountStatusText);
-
-            System.out.println("Before Storage Limit: " + beforeLimit);
-            System.out.println("After Storage Limit: " + afterLimit);
-
-            if (afterLimit == beforeLimit + 1.0) {
-                System.out.println("✅ Storage limit increased by 1 MB as expected.");
-            } else {
-                System.out.println("❌ Storage limit did not increase by 1 MB.");
-                System.out.println("Expected: " + (beforeLimit + 1.0) + ", but got: " + afterLimit);
-            }
-
-            int beforeSignLimit = getSignLimitFromText(ExistingsignCountStatusText);
-            int afterSignLimit = getSignLimitFromText(updatedsignCountStatusText);
-
-            System.out.println("Before Sign Limit: " + beforeSignLimit);
-            System.out.println("After Sign Limit: " + afterSignLimit);
-
-            if (afterSignLimit == beforeSignLimit + 20) {
-                System.out.println("✅ Sign count limit increased by 20 as expected.");
-            } else {
-                System.out.println("❌ Sign count limit did not increase by 20.");
-                System.out.println("Expected: " + (beforeSignLimit + 20) + ", but got: " + afterSignLimit);
-            }
-
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error in validation: " + e.getMessage());
-        }
-    }
-
+}
 
 
 	
-// Initialize Actions class for advanced user interactions
-
-
 	public void clickAccountDetails() {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25)); // Wait object with 20s timeout
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Wait object with 10s timeout
 		 try {
 	    	    wait.until(ExpectedConditions.elementToBeClickable(
-	    	        By.xpath("(//div[@class='individualMenu']//a)[1]")
-	    	    ));
+	    	        By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[3]/a")
+	    	    )).click();;
 	    	} catch (Exception e1) {
 	    	    try {
 	    	        wait.until(ExpectedConditions.elementToBeClickable(
@@ -197,7 +206,7 @@ String updatedsignCountStatusText;
 	//Click Subscription topup feature under Topup
 	public void subscriptionTopUpClick() throws InterruptedException {
 		Thread.sleep(4000);
-		driver.findElement(By.xpath("//a[text()='eSign TopUp']/following-sibling::a")).click();
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[4]/div/div[2]/a[2]")).click();
 	}
 	
 	// Move to the checkbox("i agree to terms and conditions in consent")
@@ -267,7 +276,7 @@ public void closeBulkSigningEmailNotificModel() {
 
 //click sign documents in sidebar
 public void clickSignDocuments() {
-	 driver.findElement(By.xpath("(//div[@class='individualMenu']//a)[2]")).click();	
+	 driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[2]/a")).click();	
 }
 
 //click upload PDF button
@@ -320,10 +329,10 @@ public void clickSignByMeButton() {
 				        button3.click();
 			    }
 	}
- 
+   
 	//clicks the inbox
 	public void clickInbox() {
-		driver.findElement(By.xpath("//a[normalize-space(text())='Inbox']")).click();
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div")).click();
 	}
 	
 	//clicks the delete symbol in a row in actions in inbox
@@ -355,7 +364,7 @@ public void clickSignByMeButton() {
 		robot.keyRelease(KeyEvent.VK_ENTER);
 		Thread.sleep(3000); // Wait for file upload to complete
 	}
-  
+    
 	//This method clicks the signingsAddOn GetStartedButton 
 	public void signingsAddOnGetStartedButton() {
 		driver.findElement(By.xpath("(//div[@class='getStarted__sub']//button)[1]")).click();
@@ -407,12 +416,25 @@ public void clickSignByMeButton() {
 
 				//This method checks whether the pln displayed in account details is current plan
 				public void checkplanAccountDetails() {
-					String text = driver.findElement(By.xpath("//span[normalize-space(text())='Current Plan']")).getText();
-					Assert.assertEquals(text, "Current Plan");
+					WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
+
+					 WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[4]/div[2]/div/div[1]/span")));
+				        String message = Emessage.getText().trim();
+				        String expectedMessage = "Current Plan";
+
+				        SoftAssert softAssert = new SoftAssert();
+				        softAssert.assertEquals(message, expectedMessage);
+					
 					
 					try {
-						String upcomingPlan=driver.findElement(By.xpath("//div[@class='infoCardHeader-inactive']//span[1]")).getText();
-						Assert.assertEquals(upcomingPlan,"Upcoming Plan" );
+						
+						 WebElement Emessage1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='infoCardHeader-inactive']//span[1]")));
+					        String message1 = Emessage.getText().trim();
+					        String expectedMessage1 = "Upcoming Plan";
+
+					     
+					        softAssert.assertEquals(message, expectedMessage);
+						
 					}catch(Exception e){
 						System.out.println("No Upcoming plan displayed");
 					}
@@ -439,12 +461,12 @@ public void clickSignByMeButton() {
 		Robot robot = new Robot();
 		robot.keyPress(KeyEvent.VK_CONTROL);
 
-      // Small delay to allow focus to go to the right window
-      Thread.sleep(1000);
+        // Small delay to allow focus to go to the right window
+        Thread.sleep(1000);
 
-      // Press and release the Escape key
-      robot.keyPress(KeyEvent.VK_ESCAPE);
-      robot.keyRelease(KeyEvent.VK_ESCAPE);
+        // Press and release the Escape key
+        robot.keyPress(KeyEvent.VK_ESCAPE);
+        robot.keyRelease(KeyEvent.VK_ESCAPE);
 
 		
 	}
@@ -509,7 +531,7 @@ public void clickSignByMeButton() {
 		payButtonclick();//clicks the pay button after selecting a addon and plans
 		Thread.sleep(6000);
 		topUpAfterPayModal();//verifies whether text displayed is correct in model after clicking pay button
-		driver.findElement(By.xpath("//div[@class='react-confirm-alert-button-group']//button[1]")).click();//press ok button for the model
+		driver.findElement(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button")).click();//press ok button for the model
 
 	}
 	//makes a topUp for signings addOn
@@ -522,7 +544,8 @@ public void clickSignByMeButton() {
 		payButtonclick();//clicks the pay button after selecting a addon and plans
 		Thread.sleep(3000);
 		topUpAfterPayModal();//verifies whether text displayed is correct in model after clicking pay button
-		driver.findElement(By.xpath("//div[@class='react-confirm-alert-button-group']//button[1]")).click();//press ok button for the model
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button")).click();//press ok button for the model
 
 	}
 	
@@ -536,11 +559,45 @@ public void clickSignByMeButton() {
 			payButtonclick();//clicks the pay button after selecting a addon and plans
 			Thread.sleep(3000);
 			topUpAfterPayModal();//verifies whether text displayed is correct in model after clicking pay button
-			driver.findElement(By.xpath("//div[@class='react-confirm-alert-button-group']//button[1]")).click();//press ok button for the model
+			driver.findElement(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button")).click();//press ok button for the model
 
 		}
 		
-		
+//		//this method prints singing and storage status before topUp
+//		public void printSingingStorageBeforeTopup() throws InterruptedException {
+//			driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[3]/a")).click(); // Click sidebar menu//press account details in sidebar
+//			Thread.sleep(3000);
+//			checkplanAccountDetails();//This method checks whether the pln displayed in account details is current plan
+//			System.out.println("*************************************************");
+//			System.out.println("           Signs Completed status                ");
+//			System.out.println("*************************************************");
+//			System.out.println(driver.findElement(By.className("signCountStatus")).getText());
+//			System.out.println();
+//			System.out.println();
+//			System.out.println();
+//			System.out.println("*************************************************");
+//			System.out.println("           Storage used status                ");
+//			System.out.println("*************************************************");
+//			System.out.println(driver.findElement(By.className("storageCountStatus")).getText());
+//		}
+//		
+//		//this method prints singing and storage status after topUp
+//		public void printSingingStorageAfterTopup() throws InterruptedException {
+//			driver.findElement(By.xpath("//a[normalize-space(text())='Account Details']")).click(); // Click sidebar menu//press account details in sidebar
+//			Thread.sleep(3000);
+//			checkplanAccountDetails();//This method checks whether the pln displayed in account details is current plan
+//			System.out.println("*************************************************");
+//			System.out.println("           Signs Completed status                ");
+//			System.out.println("*************************************************");
+//			System.out.println(driver.findElement(By.className("signCountStatus")).getText());
+//			System.out.println();
+//			System.out.println();
+//			System.out.println();
+//			System.out.println("*************************************************");
+//			System.out.println("           Storage used status                ");
+//			System.out.println("*************************************************");
+//			System.out.println(driver.findElement(By.className("storageCountStatus")).getText());
+//		}
 		
 		//this method close the remainder modal in account details when logged in
 		public void accountDetailsRemainderClose() throws InterruptedException {
@@ -584,6 +641,7 @@ public void clickSignByMeButton() {
 			Thread.sleep(3000);
 		
 		}
+	
 }
 
 

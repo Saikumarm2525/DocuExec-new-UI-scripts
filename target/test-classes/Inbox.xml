@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Inbox Module Suite" parallel="false">
+<listeners>
+        <listener class-name="docuexec.EnduserAllModules.MyTestListener"/>
+    </listeners>
+    <test name="Test - Delete">
+        <classes>
+            <class name="docuexec.EnduserAllModules.InboxDeleteAndDownload">
+                <methods>
+                    <include name="Delete"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Test - Download">
+        <classes>
+            <class name="docuexec.EnduserAllModules.InboxDeleteAndDownload">
+                <methods>
+                    <include name="Download"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Test - Comment">
+        <classes>
+            <class name="docuexec.EnduserAllModules.InboxDeleteAndDownload">
+                <methods>
+                    <include name="comment"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Test - Email">
+        <classes>
+            <class name="docuexec.EnduserAllModules.InboxDeleteAndDownload">
+                <methods>
+                    <include name="Email"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Test - View">
+        <classes>
+            <class name="docuexec.EnduserAllModules.InboxDeleteAndDownload">
+                <methods>
+                    <include name="view"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

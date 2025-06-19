@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import org.junit.Assert;
-
+//This module is not working,go for usermanagement module
 public class ProfileUpdates extends Baseclass {
 
 	@Test
@@ -226,6 +226,7 @@ public class ProfileUpdates extends Baseclass {
 //		driver.navigate().to(uaturl + "/accountInfo");
 
 	}
+	
 
 	@Test
 	public void Editmail() throws Exception {
@@ -392,7 +393,7 @@ public class ProfileUpdates extends Baseclass {
 	public void DeleteAccount() throws Exception {
 		testLogin();//login
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("//button[contains(@class,'UserDetailCustom dropdown-toggle')]")).click();//click on name
+		driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[1]/div/span[1]/div/button")).click();//click on name
 		
 		
 		
@@ -400,7 +401,8 @@ public class ProfileUpdates extends Baseclass {
 																									// deleteaccount
 		Thread.sleep(2000);
 		driver.findElement(By.id("accountDeteChckBox")).click();// click agree check box
-		driver.findElement(By.xpath("(//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[2]/div/div[3]/div/span)[1]")).click();// clicking proceed btn
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[2]/div/div[3]/div")).click();// clicking proceed btn
 		Thread.sleep(3000);
 		try {
 			driver.findElement(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button")).click();// click ok
@@ -409,6 +411,8 @@ public class ProfileUpdates extends Baseclass {
 		}
 		Thread.sleep(3000);
 		driver.findElement(By.xpath("//*[@id=\"DelteAccuntOTP\"]")).sendKeys(otp); // entering Otp
-		driver.findElement(By.xpath("(//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[3]/div/div[3]/div[1]/span)[1]")).click();// click delete/submit btn
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[3]/div/div[3]/div[1]/span")).click();// click delete/submit btn
+		
 	}
 }

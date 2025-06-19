@@ -50,7 +50,7 @@ public class login_Scenarios {
         	WebElement passwordField = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//input[@type='password'])[1]")));
 
         	// Enter the username into the username field
-        	usernameField.sendKeys("637489943");
+        	usernameField.sendKeys("8999999999");
 
         	// Enter the password into the password field
         	passwordField.sendKeys("Test@123");
@@ -60,19 +60,19 @@ public class login_Scenarios {
 
         	// Click the visibility toggle icon
         	visibilityToggle.click();
-
+              Thread.sleep(2000);
         	// Locate the login button using XPath and wait until it's clickable
-        	WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[normalize-space(text())='login']")));
+        	WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/div/div[3]/div[1]/div[2]/button")));
 
         	// Click the login button to submit the login form
         	loginButton.click();
-
+        	   Thread.sleep(2000);
         	// Locate the user profile image using XPath and wait until it's present
         	WebElement userProfileImage = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@class='userProfile hoverclass']//img[1]")));
 
         	// Click on the user profile image to open the profile menu
         	userProfileImage.click();
-
+        	   Thread.sleep(2000);
         	// Locate the profile details header using XPath and wait until it's present
         	WebElement profileHeader = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[normalize-space(text())='Profile Details']")));
 
@@ -102,18 +102,18 @@ public class login_Scenarios {
     	   WebElement passwordField = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//input[@type='password'])[1]")));
 
     	   // Enter the username into the username field
-    	   usernameField.sendKeys("637489943");
+    	   usernameField.sendKeys("9191919191");
 
     	   // Enter the password into the password field
     	   passwordField.sendKeys("Test@123");
     	// Locate the visibility toggle icon
     	   WebElement visibilityToggle = driver.findElement(By.xpath("(//img[@class='lock'])[2]"));
-
+         Thread.sleep(2000);
     	   // Click the visibility toggle icon
     	   visibilityToggle.click();
 
     	   // Locate the login button using XPath and wait until it's clickable
-    	   WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[normalize-space(text())='login']")));
+    	   WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/div/div[3]/div[1]/div[2]/button")));
 
     	   // Click the login button to submit the login form
     	   loginButton.click();
@@ -135,6 +135,8 @@ public class login_Scenarios {
            driver.quit();
        }
    }
+   
+   
    @Test
    public void InvalidPassword() {
        try {
@@ -163,23 +165,23 @@ public class login_Scenarios {
            visibilityToggle.click();
 
            // Locate the login button using XPath and wait until it's clickable
-           WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[normalize-space(text())='login']")));
+           WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/div/div[3]/div[1]/div[2]/button")));
 
            // Click the login button to submit the login form
            loginButton.click();
 
            // Wait for the error message to be visible
-           WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='error-message']")));
+           WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"notification-wrapper\"]/div/span")));
 
            // Capture the actual error message
            String actualErrorMsg = errorMessage.getText();
 
            // Define the expected error message
-           String expectedErrorMsg = "Invalid username or password";
+           String expectedErrorMsg = "Password Incorrect!!";
 
            // Assert that the actual error message matches the expected message
            Assert.assertEquals(actualErrorMsg, expectedErrorMsg, "Error message does not match the expected message.");
-
+           driver.quit();
        } catch (Exception e) {
            e.printStackTrace();
        }
@@ -213,30 +215,30 @@ public class login_Scenarios {
            visibilityToggle.click();
 
            // Locate the login button using XPath and wait until it's clickable
-           WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[normalize-space(text())='login']")));
+           WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/div/div[3]/div[1]/div[2]/button")));
 
            // Click the login button to submit the login form
            loginButton.click();
 
            // Wait for the error message to be visible
-           WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='error-message']")));
+           WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"notification-wrapper\"]/div/span")));
 
            // Capture the actual error message
            String actualErrorMsg = errorMessage.getText();
 
            // Define the expected error message
-           String expectedErrorMsg = "Invalid username or password";
+           String expectedErrorMsg = "Please enter your login name!";
 
            // Assert that the actual error message matches the expected message
            Assert.assertEquals(actualErrorMsg, expectedErrorMsg, "Error message does not match the expected message.");
-
+           driver.quit();
        } catch (Exception e) {
            e.printStackTrace();
        }
    }
    @Test
    public void WithoutPassword() {
-       try {
+      
            // Open the application URL
            driver.get(Stagingurl);
 
@@ -262,35 +264,32 @@ public class login_Scenarios {
            visibilityToggle.click();
 
            // Locate the login button using XPath and wait until it's clickable
-           WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[normalize-space(text())='login']")));
-
+           WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/div/div[3]/div[1]/div[2]/button")));
            // Click the login button to submit the login form
            loginButton.click();
 
            // Wait for the error message to be visible
-           WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='error-message']")));
+           WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"notification-wrapper\"]/div/span")));
 
            // Capture the actual error message
            String actualErrorMsg = errorMessage.getText();
 
            // Define the expected error message
-           String expectedErrorMsg = "Password is required";
+           String expectedErrorMsg = "Please enter your password!";
 
            // Assert that the actual error message matches the expected message
            Assert.assertEquals(actualErrorMsg, expectedErrorMsg, "Error message does not match the expected message.");
-
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
+           driver.quit();
+       
    }
    @Test
-   public void BothFieldsEmpty() {
-       try {
+   public void BothFieldsEmpty() throws InterruptedException {
+      
            // Open the application URL
            driver.get(Stagingurl);
 
            // Initialize WebDriverWait with a timeout of 10 seconds
-           WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+           WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
 
            // Locate the username input field using XPath and wait until it's present
            WebElement usernameField = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//input[@id='emailMobile'])[1]")));
@@ -308,27 +307,24 @@ public class login_Scenarios {
            // Click the visibility toggle icon
            visibilityToggle.click();
 
-           // Locate the login button using XPath and wait until it's clickable
-           WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[normalize-space(text())='login']")));
-
+        // Locate the login button using XPath and wait until it's clickable
+           WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/div/div[3]/div[1]/div[2]/button")));
            // Click the login button to submit the login form
            loginButton.click();
 
            // Wait for the error message to be visible
-           WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='error-message']")));
+           WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"notification-wrapper\"]/div/span")));
 
            // Capture the actual error message
            String actualErrorMsg = errorMessage.getText();
 
            // Define the expected error message
-           String expectedErrorMsg = "Please enter both username and password";
+           String expectedErrorMsg ="Please enter your login name!";
 
            // Assert that the actual error message matches the expected message
            Assert.assertEquals(actualErrorMsg, expectedErrorMsg, "Error message does not match the expected message.");
-
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
+          driver.quit();
+       
    }
 
 }

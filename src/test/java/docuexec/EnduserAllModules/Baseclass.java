@@ -26,19 +26,19 @@ public class Baseclass {
     public String dc="https://docuxecstage.finfotech.co.in/login";
     public String p2pl="https://p2puat.finfotech.co.in/login";
     public String Stagingurl="https://docuxecstage.finfotech.co.in/login";
-    String username = "6026602660"//9011901190on uat///6011601160staging
+    String username = "8999999999"//9011901190on uat///6011601160staging
     		+ "";//"8182818282";//"8081808180";  // Replace with your username//6380695905
     String password = "Test@123";//Replace with your Password
-    String profilemail="thiya@gmail.com";//provide profile mail id to perform Third party signing
+    String profilemail="sai1234@gmail.com";//provide profile mail id to perform Third party signing
     String otp="654321";
-    String name="lavanyaa";
-    String mail="lavanyab401@gmail.com";
-    String mob="6374899399";
+    String name="Saikumarm";
+    String mail="saikumar2525@gmail.com.com";
+    String mob="8999999999";
     String wotp="654321";
-    String vouchercode="uatst00004";//Enter Voucher Code 
-    String filePath="C:\\Users\\lavanyab.FINFOTECH\\Downloads\\Statement finvu.pdf";//Replace File path
+   // String vouchercode="uatst00004";//Enter Voucher Code 
+    String filePath="C:\\Users\\saikumarm\\Downloads\\DocuExec_TandC_doc";//Replace File path
     String tdate="11-11-2024";
-    String csvfilepath = "C:\\Users\\saikumarm\\Downloads\\bulkSigningUpload (3).csv";
+    String csvfilepath = "C:\\Users\\saikumarm\\Documents\\BulkSignerList (1).csv";
     String emailid="saikumarmalipatil2525@gmail.com";
     String ccEmailid="saikumarmalipatil25@gmail.com";
 //    String bulksigningpdffile="C:\\Users\\lavanyab.FINFOTECH\\Desktop\\Docu Exec\\bulkSigningPDF.pdf";
@@ -105,17 +105,14 @@ public class Baseclass {
 	    JavascriptExecutor js = (JavascriptExecutor) driver;
 	    js.executeScript("arguments[0].scrollIntoView(true);", driver.findElement(By.xpath("//*[contains(text(),'" + untilPath + "')]")));
 	}
-    @Test
+
 	public void testLogout()throws Exception 
 	{
-//    	Thread.sleep(2000);
-//		driver.navigate().to(Stagingurl + "/accountInfo");
-
+		System.out.println("logOut");
 		Thread.sleep(3000);
-		driver.findElement(By.xpath("//button[contains(@class,'UserDetailCustom dropdown-toggle')]")).click();//click on name
+		driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[1]/div/span[1]/div/button")).click();//click on name
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("(//button[normalize-space(text())='Logout'])[1]")).click();//click on login
-
+		driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[1]/div/span[1]/div/div/button[2]")).click();//click on login
 	}
     @AfterClass
     public void close()throws Exception

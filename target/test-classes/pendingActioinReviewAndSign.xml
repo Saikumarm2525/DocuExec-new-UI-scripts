@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="ReviewAndSignSuite">
+<listeners>
+        <listener class-name="docuexec.EnduserAllModules.MyTestListener"/>
+    </listeners>
+    <test name="ReviewAndSign_Finish">
+        <classes>
+            <class name="docuexec.EnduserAllModules.ReviewAndSign">
+                <methods>
+                    <include name="ReviewandSignfinish"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="ReviewAndSign_DiscardAndSign">
+        <classes>
+            <class name="docuexec.EnduserAllModules.ReviewAndSign">
+                <methods>
+                    <include name="ReviewandSignDiscardAndSign"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="ReviewAndSign_DiscardOnly">
+        <classes>
+            <class name="docuexec.EnduserAllModules.ReviewAndSign">
+                <methods>
+                    <include name="ReviewandSigndiscard"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

@@ -52,7 +52,7 @@ public class Usermanagement extends Baseclass {
 		//view pass
 		driver.findElement(By.xpath("(//div[@class='imgLogoDiv']//i)[2]")).click();
 		// Click proceed button
-		WebElement verifyButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//div[@class='actionBtn']//span)[1]")));
+		WebElement verifyButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[3]/div/div[3]/div[1]/span")));
 		verifyButton.click();
 
 		try {
@@ -72,19 +72,19 @@ public class Usermanagement extends Baseclass {
 		otpField.sendKeys(otp);
 
 		// Click on submit button
-		WebElement submitButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("submitBtn")));
+		WebElement submitButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[3]/div/div[3]/div[1]/span")));
 		submitButton.click();
 
-		WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div")));
+		WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/p")));
 		String message = Emessage.getText().trim();
 
 		// Check if the message contains the specific text and extract it
-		String successMessage = message.contains("Password changed successfully") ? "Password changed successfully"
+		String successMessage = message.contains("Password updated successfully") ? "Password updated successfully"
 				: message;
 
 		System.out.println("change password:" + successMessage);
 		// Assertion to check if the success message is as expected
-		String expectedSuccessMessage = "Password changed successfully";
+		String expectedSuccessMessage = "Password updated successfully";
 
 		softAssert.assertEquals(successMessage, expectedSuccessMessage); // For TestNG
 
@@ -202,7 +202,7 @@ public class Usermanagement extends Baseclass {
 			driver.findElement(By.xpath("//span[normalize-space(text())='Email OTP']/following::input")).sendKeys(otp);// entering email OTP
 			driver.findElement(By.xpath("(//div[@class='actionBtn']//span)[1]")).click();// click submitchanges btn
 		}
-		WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div")));
+		WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/p")));
 		String message = Emessage.getText().trim();
 
 		// Check if the message contains the specific text and extract it
@@ -242,15 +242,12 @@ public class Usermanagement extends Baseclass {
 
 		Thread.sleep(2000);
 		try { // Click OK on the message
-			WebElement okButton = wait.until(ExpectedConditions
-					.elementToBeClickable(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button")));
-			okButton.click();
-
-			driver.findElement(By.xpath("(//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[3]/div/div[2]/div[3]/div[2]/div/img)[1]")).click();// Edit profile button click
+			
+			driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[2]/div[1]/div[1]/div[2]/div[1]/span")).click();// Edit profile button click
 			Thread.sleep(2000);
 
 
-			driver.findElement(By.xpath("(//*[@id=\"profileEmailID\"])[1]")).click();// edit full email
+			driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[3]/div/div[2]/div[3]/div[2]/div")).click();// edit full email
 			driver.findElement(By.xpath("(//*[@id=\"profileEmailID\"])[1]")).clear();// clear the email field
 			driver.findElement(By.xpath("(//*[@id=\"profileEmailID\"])[1]")).sendKeys(mail);// enter mail
 			driver.findElement(By.xpath("(//div[@class='actionBtn']//span)[1]")).click();// click save changes btn
@@ -283,7 +280,7 @@ public class Usermanagement extends Baseclass {
 			driver.findElement(By.xpath("//span[normalize-space(text())='Email OTP']/following::input")).sendKeys(otp);// entering email OTP
 			driver.findElement(By.xpath("(//div[@class='actionBtn']//span)[1]")).click();// click submitchanges btn
 		}
-		WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div")));
+		WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/p")));
 		String message = Emessage.getText().trim();
 
 		// Check if the message contains the specific text and extract it
@@ -323,15 +320,12 @@ public class Usermanagement extends Baseclass {
 
 		Thread.sleep(2000);
 		try { // Click OK on the message
-			WebElement okButton = wait.until(ExpectedConditions
-					.elementToBeClickable(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button")));
-			okButton.click();
-
-			driver.findElement(By.xpath("(//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[3]/div/div[2]/div[2]/div[2]/div/img)[1]")).click();// Edit profile button click
+			
+			driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[2]/div[1]/div[1]/div[2]/div[1]/span")).click();// Edit profile button click
 			Thread.sleep(2000);
 
-
-			driver.findElement(By.xpath("(//*[@id=\"mobileNumber\"])[1]")).click();// edit full name
+			                                                           
+			driver.findElement(By.xpath("(//div[@title='Edit']//img)[2]")).click();// edit full name
 			driver.findElement(By.xpath("(//*[@id=\"mobileNumber\"])[1]")).clear();// clear the name field
 			driver.findElement(By.xpath("(//*[@id=\"mobileNumber\"])[1]")).sendKeys(mob);// enter full name
 			driver.findElement(By.xpath("(//div[@class='actionBtn']//span)[1]")).click();// click save changes btn
@@ -364,7 +358,7 @@ public class Usermanagement extends Baseclass {
 			driver.findElement(By.xpath("//span[normalize-space(text())='Email OTP']/following::input")).sendKeys(otp);// entering email OTP
 			driver.findElement(By.xpath("(//div[@class='actionBtn']//span)[1]")).click();// click submitchanges btn
 		}
-		WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div")));
+		WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/p")));
 		String message = Emessage.getText().trim();
 
 		// Check if the message contains the specific text and extract it

@@ -14,9 +14,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+@Listeners(MyTestListener.class)
 public class PendingAction extends Baseclass {
 	@Test
 	public void loginAndSignDocumentsThreeTimes() throws Exception {
@@ -56,9 +58,9 @@ public class PendingAction extends Baseclass {
 		signDocument();
 		enterCurrentPage();
 		performElectronicSigning();
-		Thread.sleep(2000);
+		Thread.sleep(5000);
 		DiscardAndSignPendingAction();
-		driver.manage().window().maximize();
+//		driver.manage().window().maximize();
 		performElectronicSigning();
 		Finish();
 	}
@@ -69,6 +71,7 @@ public class PendingAction extends Baseclass {
 		Thread.sleep(4000);
 		signDocument();
 		enterAllPage();
+		Thread.sleep(5000);
 		performElectronicSigning();
 		Thread.sleep(2000);
 		DiscardAndSignPendingAction();
@@ -84,7 +87,7 @@ public class PendingAction extends Baseclass {
 		signDocument();
 		enterCustomPages("1,2");
 		performElectronicSigning();
-		Thread.sleep(2000);
+		Thread.sleep(4000);
 		DiscardAndSignPendingAction();
 		driver.manage().window().maximize();
 		performElectronicSigning();
@@ -154,7 +157,7 @@ public class PendingAction extends Baseclass {
 		signDocument();
 		enterAllPage();
 		performDSCSigning(); // Replaced with performDSCSigning
-		Thread.sleep(2000);
+		Thread.sleep(6000);
 		DiscardAndSignPendingAction();
 		driver.manage().window().maximize();
 		performElectronicSigning();
@@ -283,7 +286,7 @@ public class PendingAction extends Baseclass {
 		Thread.sleep(4000); // Wait for document to be signed
 		enterCustomPages("1,2"); // Navigate to custom pages (e.g., pages 1 and 2)
 		performDSCSigning(); // Perform DSC (Digital Signature Certificate) signing
-		Thread.sleep(4000); // Wait for the DSC signing to complete
+		Thread.sleep(6000); // Wait for the DSC signing to complete
 		FinishPendingAction(); // Finish pending action after signing
 	}
 
@@ -307,9 +310,10 @@ public class PendingAction extends Baseclass {
 		signDocument();
 		enterAllPage();
 		performElectronicSigning();
-		Thread.sleep(2000);
+		Thread.sleep(6000);
 		DiscardPendingAction();
 		driver.manage().window().maximize();
+		Thread.sleep(6000);
 		performElectronicSigning();
 		Finish();
 	}
@@ -321,7 +325,7 @@ public class PendingAction extends Baseclass {
 		signDocument();
 		enterCustomPages("1,2");
 		performElectronicSigning();
-		Thread.sleep(2000);
+		Thread.sleep(6000);
 		DiscardPendingAction();
 		driver.manage().window().maximize();
 		performElectronicSigning();
@@ -335,6 +339,7 @@ public class PendingAction extends Baseclass {
 		signDocument();
 		enterCurrentPage();
 		performOtpSigning();
+		Thread.sleep(6000);
 		DiscardPendingAction();
 		driver.manage().window().maximize();
 		performOtpSigning();
@@ -348,6 +353,7 @@ public class PendingAction extends Baseclass {
 		signDocument();
 		enterAllPage();
 		performOtpSigning();
+		Thread.sleep(6000);
 		DiscardPendingAction();
 		driver.manage().window().maximize();
 		performOtpSigning();
@@ -361,8 +367,9 @@ public class PendingAction extends Baseclass {
 		signDocument();
 		enterCustomPages("1,2");
 		performOtpSigning();
+		Thread.sleep(6000);
 		DiscardPendingAction();
-		driver.manage().window().maximize();
+//		driver.manage().window().maximize();
 		performOtpSigning();
 		Finish();
 	}
@@ -374,6 +381,7 @@ public class PendingAction extends Baseclass {
 		signDocument();
 		enterCurrentPage();
 		performDSCSigning();
+		Thread.sleep(6000);
 		DiscardPendingAction();
 		driver.manage().window().maximize();
 		performDSCSigning();
@@ -387,7 +395,7 @@ public class PendingAction extends Baseclass {
 		signDocument();
 		enterAllPage();
 		performDSCSigning();
-		Thread.sleep(2000);
+		Thread.sleep(6000);
 		DiscardPendingAction();
 		driver.manage().window().maximize();
 		performDSCSigning();
@@ -401,8 +409,9 @@ public class PendingAction extends Baseclass {
 		signDocument();
 		enterCustomPages("1,2");
 		performDSCSigning();
-		Thread.sleep(2000);
+		Thread.sleep(6000);
 		DiscardPendingAction();
+		Thread.sleep(6000);
 		driver.manage().window().maximize();
 		performDSCSigning();
 		Finish();
@@ -410,56 +419,63 @@ public class PendingAction extends Baseclass {
 
 	@Test
 	public void FinishPendingAction() throws InterruptedException {
+
+
+
+
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
 //		driver.manage().window().setSize(new org.openqa.selenium.Dimension(1024, 768));
 
-		Thread.sleep(5000);
+//		Thread.sleep(5000);
 
-		// Locate the scrollable menu bar
-		WebElement menuBar = wait.until(ExpectedConditions
-				.visibilityOfElementLocated(By.xpath("//div[@class='userActionMenus menuBarScroll']")));
-
-		// Try to find the target element (may not be in view initially)
-		By pendingActionXpath = By.xpath("//a[normalize-space(text())='Pending Action Inbox']");
-
-		boolean found = false;
-		int maxScrolls = 20; // to prevent infinite loops
-		int scrollAttempt = 0;
-
-		while (!found && scrollAttempt < maxScrolls) {
-			try {
-				WebElement pendingActionButton = menuBar.findElement(pendingActionXpath);
-				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", pendingActionButton);
-				wait.until(ExpectedConditions.elementToBeClickable(pendingActionButton)).click();
-				found = true;
-			} catch (Exception e) {
-				// Scroll the menu bar horizontally or vertically depending on layout
-				((JavascriptExecutor) driver).executeScript("arguments[0].scrollTop += 50;", menuBar);
-				scrollAttempt++;
-			}
-		}
-
-		if (!found) {
-			throw new NoSuchElementException("Could not find 'Pending Action Inbox' after scrolling.");
-		} // actual
-			// ID,
-			// class,
-		By noteXpath = By.xpath(
-				"//p[contains(.,'Note: Once the action is performed successfully, the document will be moved to inbox.')]");
-
-		WebElement noteElement = wait.until(ExpectedConditions.presenceOfElementLocated(noteXpath));
-
-		if (noteElement != null && noteElement.isDisplayed()) {
-			System.out.println("✅ Note is present and visible.");
-		} else {
-			System.out.println("❌ Note is not present.");
-		} // or
-			// XPath
+//		// Locate the scrollable menu bar
+//		WebElement menuBar = wait.until(ExpectedConditions
+//				.visibilityOfElementLocated(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div")));
+//
+//		// Try to find the target element (may not be in view initially)
+//		By pendingActionXpath = By.xpath("//a[normalize-space(text())='Pending Action Inbox']");
+//
+//		boolean found = false;
+//		int maxScrolls = 20; // to prevent infinite loops
+//		int scrollAttempt = 0;
+//
+//		while (!found && scrollAttempt < maxScrolls) {
+//			try {
+//				WebElement pendingActionButton = menuBar.findElement(pendingActionXpath);
+//				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", pendingActionButton);
+//				wait.until(ExpectedConditions.elementToBeClickable(pendingActionButton)).click();
+//				found = true;
+//			} catch (Exception e) {
+//				// Scroll the menu bar horizontally or vertically depending on layout
+//				((JavascriptExecutor) driver).executeScript("arguments[0].scrollTop += 50;", menuBar);
+//				scrollAttempt++;
+//			}
+//		}
+//
+//		if (!found) {
+//			throw new NoSuchElementException("Could not find 'Pending Action Inbox' after scrolling.");
+//		} // actual
+//			// ID,
+//			// class,
+//		By noteXpath = By.xpath(
+//				"//p[contains(.,'Note: Once the action is performed successfully, the document will be moved to inbox.')]");
+//
+//		WebElement noteElement = wait.until(ExpectedConditions.presenceOfElementLocated(noteXpath));
+//
+//		if (noteElement != null && noteElement.isDisplayed()) {
+//			System.out.println("âœ… Note is present and visible.");
+//		} else {
+//			System.out.println("â�Œ Note is not present.");
+//		} // or
+//			// XPath
+		Thread.sleep(3000);
+driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div")).click();//click on inbox
+driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div[2]/a[2]")).click();//click on documents
 
 		// Wait for the "Sign" icon to be clickable and click on it
 		WebElement signIcon = wait.until(ExpectedConditions.elementToBeClickable(
-				By.xpath("(//td[contains(@class,'MuiTableCell-root MuiTableCell-body')]//img)[2]"))); // Replace
+				By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[2]/div/div[2]/div/div/div/table/tbody/tr[1]/td[6]/img"))); // Replace
 																										// with
 																										// the
 																										// actual
@@ -482,52 +498,55 @@ public class PendingAction extends Baseclass {
 
 //		driver.manage().window().setSize(new org.openqa.selenium.Dimension(1024, 768));
 
-		Thread.sleep(5000);
+//		Thread.sleep(5000);
 
-		// Locate the scrollable menu bar
-		WebElement menuBar = wait.until(ExpectedConditions
-				.visibilityOfElementLocated(By.xpath("//div[@class='userActionMenus menuBarScroll']")));
-
-		// Try to find the target element (may not be in view initially)
-		By pendingActionXpath = By.xpath("//a[normalize-space(text())='Pending Action Inbox']");
-
-		boolean found = false;
-		int maxScrolls = 20; // to prevent infinite loops
-		int scrollAttempt = 0;
-
-		while (!found && scrollAttempt < maxScrolls) {
-			try {
-				WebElement pendingActionButton = menuBar.findElement(pendingActionXpath);
-				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", pendingActionButton);
-				wait.until(ExpectedConditions.elementToBeClickable(pendingActionButton)).click();
-				found = true;
-			} catch (Exception e) {
-				// Scroll the menu bar horizontally or vertically depending on layout
-				((JavascriptExecutor) driver).executeScript("arguments[0].scrollTop += 50;", menuBar);
-				scrollAttempt++;
-			}
-		}
-
-		if (!found) {
-			throw new NoSuchElementException("Could not find 'Pending Action Inbox' after scrolling.");
-		} // actual
-			// ID,
-			// class,
-		By noteXpath = By.xpath(
-				"//p[contains(.,'Note: Once the action is performed successfully, the document will be moved to inbox.')]");
-
-		WebElement noteElement = wait.until(ExpectedConditions.presenceOfElementLocated(noteXpath));
-
-		if (noteElement != null && noteElement.isDisplayed()) {
-			System.out.println("✅ Note is present and visible.");
-		} else {
-			System.out.println("❌ Note is not present.");
-		} // or
-			// XPath
+//		// Locate the scrollable menu bar
+//		WebElement menuBar = wait.until(ExpectedConditions
+//				.visibilityOfElementLocated(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div")));
+//
+//		// Try to find the target element (may not be in view initially)
+//		By pendingActionXpath = By.xpath("//a[normalize-space(text())='Pending Action Inbox']");
+//
+//		boolean found = false;
+//		int maxScrolls = 20; // to prevent infinite loops
+//		int scrollAttempt = 0;
+//
+//		while (!found && scrollAttempt < maxScrolls) {
+//			try {
+//				WebElement pendingActionButton = menuBar.findElement(pendingActionXpath);
+//				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", pendingActionButton);
+//				wait.until(ExpectedConditions.elementToBeClickable(pendingActionButton)).click();
+//				found = true;
+//			} catch (Exception e) {
+//				// Scroll the menu bar horizontally or vertically depending on layout
+//				((JavascriptExecutor) driver).executeScript("arguments[0].scrollTop += 50;", menuBar);
+//				scrollAttempt++;
+//			}
+//		}
+//
+//		if (!found) {
+//			throw new NoSuchElementException("Could not find 'Pending Action Inbox' after scrolling.");
+//		} // actual
+//			// ID,
+//			// class,
+//		By noteXpath = By.xpath(
+//				"//p[contains(.,'Note: Once the action is performed successfully, the document will be moved to inbox.')]");
+//
+//		WebElement noteElement = wait.until(ExpectedConditions.presenceOfElementLocated(noteXpath));
+//
+//		if (noteElement != null && noteElement.isDisplayed()) {
+//			System.out.println("âœ… Note is present and visible.");
+//		} else {
+//			System.out.println("â�Œ Note is not present.");
+//		} // or
+//			// XPath
+		Thread.sleep(3000);
+driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div")).click();//click on inbox
+driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div[2]/a[2]")).click();//click on documents
 
 		// Wait for the "Sign" icon to be clickable and click on it
 		WebElement signIcon = wait.until(ExpectedConditions.elementToBeClickable(
-				By.xpath("(//td[contains(@class,'MuiTableCell-root MuiTableCell-body')]//img)[2]"))); // Replace
+				By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[2]/div/div[2]/div/div/div/table/tbody/tr[1]/td[6]/img"))); // Replace
 																										// with
 																										// the
 																										// actual
@@ -550,52 +569,55 @@ public class PendingAction extends Baseclass {
 
 //		driver.manage().window().setSize(new org.openqa.selenium.Dimension(1024, 768));
 
-		Thread.sleep(5000);
+//		Thread.sleep(5000);
 
-		// Locate the scrollable menu bar
-		WebElement menuBar = wait.until(ExpectedConditions
-				.visibilityOfElementLocated(By.xpath("//div[@class='userActionMenus menuBarScroll']")));
-
-		// Try to find the target element (may not be in view initially)
-		By pendingActionXpath = By.xpath("//a[normalize-space(text())='Pending Action Inbox']");
-
-		boolean found = false;
-		int maxScrolls = 20; // to prevent infinite loops
-		int scrollAttempt = 0;
-
-		while (!found && scrollAttempt < maxScrolls) {
-			try {
-				WebElement pendingActionButton = menuBar.findElement(pendingActionXpath);
-				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", pendingActionButton);
-				wait.until(ExpectedConditions.elementToBeClickable(pendingActionButton)).click();
-				found = true;
-			} catch (Exception e) {
-				// Scroll the menu bar horizontally or vertically depending on layout
-				((JavascriptExecutor) driver).executeScript("arguments[0].scrollTop += 50;", menuBar);
-				scrollAttempt++;
-			}
-		}
-
-		if (!found) {
-			throw new NoSuchElementException("Could not find 'Pending Action Inbox' after scrolling.");
-		} // actual
-			// ID,
-			// class,
-		By noteXpath = By.xpath(
-				"//p[contains(.,'Note: Once the action is performed successfully, the document will be moved to inbox.')]");
-
-		WebElement noteElement = wait.until(ExpectedConditions.presenceOfElementLocated(noteXpath));
-
-		if (noteElement != null && noteElement.isDisplayed()) {
-			System.out.println("✅ Note is present and visible.");
-		} else {
-			System.out.println("❌ Note is not present.");
-		} // or
-			// XPath
+//		// Locate the scrollable menu bar
+//		WebElement menuBar = wait.until(ExpectedConditions
+//				.visibilityOfElementLocated(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div")));
+//
+//		// Try to find the target element (may not be in view initially)
+//		By pendingActionXpath = By.xpath("//a[normalize-space(text())='Pending Action Inbox']");
+//
+//		boolean found = false;
+//		int maxScrolls = 20; // to prevent infinite loops
+//		int scrollAttempt = 0;
+//
+//		while (!found && scrollAttempt < maxScrolls) {
+//			try {
+//				WebElement pendingActionButton = menuBar.findElement(pendingActionXpath);
+//				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", pendingActionButton);
+//				wait.until(ExpectedConditions.elementToBeClickable(pendingActionButton)).click();
+//				found = true;
+//			} catch (Exception e) {
+//				// Scroll the menu bar horizontally or vertically depending on layout
+//				((JavascriptExecutor) driver).executeScript("arguments[0].scrollTop += 50;", menuBar);
+//				scrollAttempt++;
+//			}
+//		}
+//
+//		if (!found) {
+//			throw new NoSuchElementException("Could not find 'Pending Action Inbox' after scrolling.");
+//		} // actual
+//			// ID,
+//			// class,
+//		By noteXpath = By.xpath(
+//				"//p[contains(.,'Note: Once the action is performed successfully, the document will be moved to inbox.')]");
+//
+//		WebElement noteElement = wait.until(ExpectedConditions.presenceOfElementLocated(noteXpath));
+//
+//		if (noteElement != null && noteElement.isDisplayed()) {
+//			System.out.println("âœ… Note is present and visible.");
+//		} else {
+//			System.out.println("â�Œ Note is not present.");
+//		} // or
+//			// XPath
+		Thread.sleep(3000);
+driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div")).click();//click on inbox
+driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div[2]/a[2]")).click();//click on documents
 
 		// Wait for the "Sign" icon to be clickable and click on it
 		WebElement signIcon = wait.until(ExpectedConditions.elementToBeClickable(
-				By.xpath("(//td[contains(@class,'MuiTableCell-root MuiTableCell-body')]//img)[2]"))); // Replace
+				By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[2]/div/div[2]/div/div/div/table/tbody/tr[1]/td[6]/img"))); // Replace
 																										// with
 																										// the
 																										// actual
@@ -604,7 +626,13 @@ public class PendingAction extends Baseclass {
 																										// or
 																										// XPath
 		signIcon.click();
+
+		// Additional assertions can be added here to verify the actions
+		// For example, check if the action leads to the expected page or result
 		Discard();
+		Thread.sleep(7000);
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[2]/div[2]/div/div/div/table/tbody/tr[1]/td[7]/div/button[3]/span[1]/img")).click();
+		
 
 	}
 
@@ -612,47 +640,47 @@ public class PendingAction extends Baseclass {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
-			Thread.sleep(3000);
-			// Click on the "Sign Document" button
-			WebElement signDocumentButton = wait.until(
-					ExpectedConditions.elementToBeClickable(By.xpath("//a[normalize-space(text())='Sign Document']")));
-			signDocumentButton.click();
+//			Thread.sleep(3000);
+//			// Click on the "Sign Document" button
+//			WebElement signDocumentButton = wait
+//					.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[normalize-space(text())='Sign Document']")));
+//			signDocumentButton.click();
 
 			Thread.sleep(2000);
 			// Click on the "Upload PDF" button
-			try {
+			try{
 				Thread.sleep(2000);
-				WebElement uploadPdfButton = wait.until(ExpectedConditions
-						.elementToBeClickable(By.xpath("/html/body/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/div[1]/div/div[2]/div[4]/div/button")));
-				uploadPdfButton.click();
+				WebElement uploadPdfButton = wait.until(ExpectedConditions.elementToBeClickable(
+					By.xpath("(//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[2]/div[1]/div/div[2]/div[4]/div/button)[1]")));
+			uploadPdfButton.click();
+			Thread.sleep(2000);}
+			
+			catch(NoSuchElementException Exception){
 				Thread.sleep(2000);
-			}
-
-			catch (NoSuchElementException Exception) {
-				Thread.sleep(2000);
-				WebElement uploadPdfButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(
-						"#defaultBackGround > div.ContentPageWithFooter > div.ContentPage > div > div.UploadBody > div.fileUploadParent > div > div.dropInfo > div.UplPDFImgBtn > div > button")));
-				uploadPdfButton.click();
-				Thread.sleep(2000);
-			}
+				WebElement uploadPdfButton = wait.until(ExpectedConditions.elementToBeClickable(
+					By.cssSelector("#defaultBackGround > div.ContentPageWithFooter > div.ContentPage > div > div.UploadBody > div.fileUploadParent > div > div.dropInfo > div.UplPDFImgBtn > div > button")));
+			uploadPdfButton.click();
+			Thread.sleep(2000);}
 
 			// Use AutoIt to handle the file upload dialog
 			// Replace with the correct path to your AutoIt script
-
+			
 			Thread.sleep(2000);
 			uploadFile(filePath);
 			Thread.sleep(2000);
 
 			// Click on the "Sign by me" button
-			WebElement signByMeButton = wait.until(
-					ExpectedConditions.elementToBeClickable(By.xpath("//div[normalize-space(text())='Sign by me']")));
+			WebElement signByMeButton = wait
+					.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[normalize-space(text())='Sign by me']")));
 			signByMeButton.click();
 
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Error signing the document: " + e.getMessage());
 		}
 	}
+
 
 	private void uploadFile(String filePath) {
 		try {
@@ -680,6 +708,7 @@ public class PendingAction extends Baseclass {
 			e.printStackTrace();
 		}
 	}
+
 
 	public static void enterCustomPages(String pages) throws Exception {
 		Thread.sleep(4000);
@@ -710,9 +739,11 @@ public class PendingAction extends Baseclass {
 	}
 
 	public static void enterCurrentPage() throws Exception {
-		Thread.sleep(4000);
+		Thread.sleep(8000);
 		try {
-			driver.findElement(By.xpath("//button[normalize-space(text())='Current page']")).click();
+			driver.findElement(By.xpath(
+					"//button[normalize-space(text())='Current page']"))
+					.click();
 		} catch (Exception e) {
 			Thread.sleep(4000);
 
@@ -723,14 +754,15 @@ public class PendingAction extends Baseclass {
 	}
 
 	public static void enterAllPage() throws Exception {
-		Thread.sleep(4000);
+		Thread.sleep(6000);
 		try {
 			driver.findElement(By.cssSelector("#allPage")).click();
-		} catch (NoSuchElementException e) {
+		} 
+		catch (NoSuchElementException e) {
 			Thread.sleep(3000);
 			driver.findElement(By.xpath("//button[normalize-space(text())='All pages']")).click();
 
-		} catch (Exception e) {
+		}catch (Exception e) {
 			Thread.sleep(4000);
 
 			driver.findElement(By.xpath("(//*[@id=\"allPage\"])[1]")).click();
@@ -791,14 +823,14 @@ public class PendingAction extends Baseclass {
 		JavascriptExecutor js = (JavascriptExecutor) driver;// scrolling to below
 //		js.executeScript("window.scrollBy(0,1000)");
 		Thread.sleep(3000);
-		Move1.clickAndHold(seal1).dragAndDropBy(seal1, 2, 240).perform();
+		Move1.clickAndHold(seal1).dragAndDropBy(seal1, 2, 140).perform();
 		Thread.sleep(2000);
 		js.executeScript("window.scrollBy(0,1000)");
-		Move1.clickAndHold(seal1).dragAndDropBy(seal1, 320, 110).perform();// position the seal
+		Move1.clickAndHold(seal1).dragAndDropBy(seal1, 120, 110).perform();// position the seal
 
 		js.executeScript("window.scrollBy(0,1000)");
 
-		Move1.clickAndHold(seal1).dragAndDropBy(seal1, 10, 10).perform();// position the seal
+		Move1.clickAndHold(seal1).dragAndDropBy(seal1, 2, 2).perform();// position the seal
 
 	}
 
@@ -809,9 +841,10 @@ public class PendingAction extends Baseclass {
 
 		driver.findElement(By.id("otpSignModeRadio")).click();
 		driver.findElement(By.id("generateOtpBtn")).click();// generate OTP
-		Thread.sleep(3000);
-		driver.findElement(By.name("mobileotp")).sendKeys("654321");// mobile otp enter
-		driver.findElement(By.name("emailotp")).sendKeys("654321");
+		Thread.sleep(4000);
+		driver.findElement(By.xpath("(//div[@class='mb-3 input-group']//input)[1]")).sendKeys("654321");// mobile otp enter
+		Thread.sleep(4000);
+		driver.findElement(By.xpath("(//div[@class='mb-3 input-group']//input)[2]")).sendKeys("654321");
 		Thread.sleep(2000);
 		JavascriptExecutor js = (JavascriptExecutor) driver;// scrolling to below
 
@@ -821,9 +854,10 @@ public class PendingAction extends Baseclass {
 		CancelButton.click();
 
 		driver.findElement(By.id("generateOtpBtn")).click();// generate OTP
-		Thread.sleep(3000);
-		driver.findElement(By.name("mobileotp")).sendKeys("654321");// mobile otp enter
-		driver.findElement(By.name("emailotp")).sendKeys("654321");
+		Thread.sleep(4000);
+		driver.findElement(By.xpath("//*[@id=\"otpmodalrow\"]/div[1]/input")).sendKeys("654321");// mobile otp enter
+		Thread.sleep(4000);
+		driver.findElement(By.xpath("//*[@id=\"otpmodalrow\"]/div[2]/input")).sendKeys("654321");
 		Thread.sleep(2000);
 
 		js.executeScript("window.scrollBy(0,1000)");
@@ -854,48 +888,48 @@ public class PendingAction extends Baseclass {
 	}
 
 	// Method to perform electronic signing actions
-	private void performElectronicSigning() throws Exception {
-		Thread.sleep(2000);
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		JavascriptExecutor js = (JavascriptExecutor) driver;// scrolling to below
+		private void performElectronicSigning() throws Exception {
+			Thread.sleep(2000);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+			JavascriptExecutor js = (JavascriptExecutor) driver;// scrolling to below
 
-		try {
-			WebElement electronicModeRadio = wait
-					.until(ExpectedConditions.elementToBeClickable(By.id("electronicModeRadio")));
-			electronicModeRadio.click();
-		} catch (Exception e) {
-			WebElement electronicModeRadioFallback = wait
-					.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"electronicModeRadio\"]")));
-			electronicModeRadioFallback.click();
+			try {
+				WebElement electronicModeRadio = wait
+						.until(ExpectedConditions.elementToBeClickable(By.id("electronicModeRadio")));
+				electronicModeRadio.click();
+			} catch (Exception e) {
+				WebElement electronicModeRadioFallback = wait
+						.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"electronicModeRadio\"]")));
+				electronicModeRadioFallback.click();
+			}
+
+
+			WebElement submitButton = wait
+					.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space(text())='SUBMIT']")));
+			submitButton.click();
+
+			try {
+				
+				WebElement checkbox=wait.until(ExpectedConditions
+						.elementToBeClickable(By.xpath("(//*[@id=\"TandCID\"])[1]")));
+				checkbox.click();
+				WebElement proceed = wait.until(ExpectedConditions
+						.elementToBeClickable(By.xpath("//span[normalize-space(text())='PROCEED']")));
+				proceed.click();
+			} catch (Exception e) {
+				WebElement checkbox=wait.until(ExpectedConditions
+						.elementToBeClickable(By.xpath("(//*[@id=\"TandCID\"])[1]")));
+				checkbox.click();
+				WebElement proceed = wait.until(ExpectedConditions
+						.elementToBeClickable(By.xpath("(//span[@class='btnLable'])[1]")));
+				proceed.click();
+
+				js.executeScript("window.scrollBy(0,-1000)");
+
+
+			}
 		}
-
-
-		WebElement submitButton = wait
-				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space(text())='SUBMIT']")));
-		submitButton.click();
-
-		try {
-			
-			WebElement checkbox=wait.until(ExpectedConditions
-					.elementToBeClickable(By.xpath("(//*[@id=\"TandCID\"])[1]")));
-			checkbox.click();
-			WebElement proceed = wait.until(ExpectedConditions
-					.elementToBeClickable(By.xpath("//span[normalize-space(text())='PROCEED']")));
-			proceed.click();
-		} catch (Exception e) {
-			WebElement checkbox=wait.until(ExpectedConditions
-					.elementToBeClickable(By.xpath("(//*[@id=\"TandCID\"])[1]")));
-			checkbox.click();
-			WebElement proceed = wait.until(ExpectedConditions
-					.elementToBeClickable(By.xpath("(//span[@class='btnLable'])[1]")));
-			proceed.click();
-
-			js.executeScript("window.scrollBy(0,-1000)");
-
-
-		}
-	}
-	
+		
 	// Method to perform DSC signing actions
 		private void performDSCSigning() throws Exception {
 			Thread.sleep(2000);
@@ -934,6 +968,7 @@ public class PendingAction extends Baseclass {
 				proceed.click();
 
 				js.executeScript("window.scrollBy(0,-1000)");
+
 
 			}
 		}
@@ -1047,14 +1082,14 @@ public class PendingAction extends Baseclass {
 		Thread.sleep(3000);
 		try {
 			Thread.sleep(3000);
-			driver.findElement(By.cssSelector("button.discardAndSign.hoverclass")).click();// click on preview btn
+			driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[4]/div[1]/div[1]/div/div[2]/button[2]")).click();// click on preview btn
 		} catch (Exception e) {
 			Thread.sleep(3000);
-			driver.findElement(By.xpath("//button[@class='discardAndSign hoverclass']")).click();// click on preview btn
+			driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[4]/div[1]/div[1]/div/div[2]/button[3]")).click();// click on preview btn
 		}
 		Thread.sleep(3000);
-		driver.findElement(By.xpath("/html/body/div[3]/div/div/div/div/button[1]")).click();// clicking proceed
-																							// alert
+		driver.findElement(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button[1]")).click();// clicking
+																												// alert
 		Thread.sleep(3000);
 
 	}
@@ -1068,7 +1103,7 @@ public class PendingAction extends Baseclass {
 
 		try {
 			Thread.sleep(3000);
-			driver.findElement(By.cssSelector("button.finishSign.hoverclass")).click(); // click on Finish
+			driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[4]/div[1]/div[1]/div/div[2]/button[1]")).click(); // click on Finish
 		} catch (NoSuchElementException e) {
 			try {
 				Thread.sleep(3000);
@@ -1076,12 +1111,13 @@ public class PendingAction extends Baseclass {
 			} catch (NoSuchElementException ex) {
 				Thread.sleep(3000);
 				driver.findElement(By.xpath("(//div[@class='furturAction']//button)[1]")).click(); // click
-																									// on
-																									// Finish
+																														// on
+																														// Finish
 			}
 		}
 		Thread.sleep(4000);
-		scroll("The signed document can be downloaded from this page, or from the Inbox later.");
+//		scroll("The signed document can be downloaded from this page, or from the Inbox later.");
+		driver.findElement(By.xpath("//*[@id=\"multipplMsg\"]")).isDisplayed();
 	}
 
 	@Test
@@ -1089,7 +1125,7 @@ public class PendingAction extends Baseclass {
 		Thread.sleep(3000);
 		JavascriptExecutor js = (JavascriptExecutor) driver;// scrolling to below
 		js.executeScript("window.scrollBy(0,-700)");
-		Thread.sleep(3000);
+		Thread.sleep(1000);
 		try {
 			Thread.sleep(3000);
 			driver.findElement(By.cssSelector("#defaultBackGround > div.ContentPageWithFooter > div.ContentPage > div > div > div.pdfPreviewParnt > div.rpv-core__viewer > div:nth-child(1) > div.furturAction > button.discardSign.hoverclass")).click();// click on discard
@@ -1099,22 +1135,29 @@ public class PendingAction extends Baseclass {
 		}catch(Exception e) {
 			driver.findElement(By.xpath("(//button[@type='button']/following-sibling::button)[3]")).click();
 		}		
-		Thread.sleep(3000);
+		Thread.sleep(1000);
 
-		driver.findElement(By.xpath("/html/body/div[2]/div/div/div/div[2]/button[2]")).click();//click cancel
+		driver.findElement(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button[2]")).click();//click cancel
 		Thread.sleep(3000);
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(1000);
 			driver.findElement(By.cssSelector("#defaultBackGround > div.ContentPageWithFooter > div.ContentPage > div > div > div.pdfPreviewParnt > div.rpv-core__viewer > div:nth-child(1) > div.furturAction > button.discardSign.hoverclass")).click();// click on discard
 		} catch (NoSuchElementException e) {
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[4]/div[1]/div[1]/div[2]/button[3]")).click();// click on discard
+			driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/div[2]/div[1]/div/div/div[4]/div[1]/div[1]/div/div[2]/button[3]")).click();// click on discard
 		}catch(Exception e) {
 			driver.findElement(By.xpath("(//button[@type='button']/following-sibling::button)[3]")).click();
-		}
-		Thread.sleep(2000);
-		driver.findElement(By.xpath("/html/body/div[2]/div/div/div/div[2]/button[1]")).click();
+		}		
+		Thread.sleep(1000);
+
+		
+		driver.findElement(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button[1]")).click();
 		// click alert okk
 	}
 
+
+	
+	
+	
+	
 }

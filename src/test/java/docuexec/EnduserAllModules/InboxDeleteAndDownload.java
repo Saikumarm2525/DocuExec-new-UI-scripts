@@ -19,22 +19,29 @@ public class InboxDeleteAndDownload extends Baseclass {
 	@Test
 	public void Delete()throws Exception
 	{
+		
 		SoftAssert softAssert = new SoftAssert();
 		// Initialize WebDriverWait
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
 		testLogin();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Inbox"))).click(); // Wait for Inbox to be clickable
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div"))).click(); // Wait for Inbox to be clickable
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div[2]/a[1]"))).click();;//click on documents
+        Thread.sleep(5000);
+        
 for(int i=0;i<=10;i++)
 {
+	Thread.sleep(5000);
+	
+	driver.findElement(By.xpath("(//span[normalize-space(text())='Actions']/following::input)[1]")).click();
 		// Wait for the delete button to be clickable
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[@class='MuiIconButton-label']//img)[2]"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[2]/div[1]/div/div[3]/div[2]/i"))).click();
 
 		// Wait for the confirm button to be clickable and click it
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='react-confirm-alert-button-group']//button[1]"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button[1]"))).click();
 
 		// Wait for the confirmation message to be visible and extract it
-		WebElement Emessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@class='react-confirm-alert']//div)[1]")));
+		WebElement Emessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/p")));
 		String message = Emessage.getText().trim();
 
 		// Check if the message contains the specific text and extract it
@@ -45,9 +52,9 @@ for(int i=0;i<=10;i++)
 		// Assertion to check if the success message is as expected
 		String expectedSuccessMessage = "Document deleted";
 		softAssert.assertEquals(successMessage, expectedSuccessMessage); // For TestNG
-
+        Thread.sleep(2000);
 		// Wait for the OK button to be clickable and click it
-		WebElement okButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='react-confirm-alert-button-group']//button[1]")));
+		WebElement okButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space(text())='OK']")));
 		okButton.click();
 }
 		softAssert.assertAll(); // Ensure assertions are executed
@@ -142,11 +149,11 @@ for(int i=0;i<=10;i++)
 
 		testLogin();
 
-		// Wait for the Inbox link to be clickable
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Inbox"))).click(); // Click on Inbox
-
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div"))).click(); // Wait for Inbox to be clickable
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div[2]/a[1]"))).click();//click on documents
+      
 		// Wait for the Download button to be clickable
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[@class='MuiIconButton-label']//img)[1]"))).click(); // Click on Download
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[2]/div[2]/div/div/div/table/tbody/tr[1]/td[7]/div/button[1]/span[1]/img"))).click(); // Click on Download
 
 		testLogout();
 
@@ -160,8 +167,9 @@ for(int i=0;i<=10;i++)
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
 		testLogin();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Inbox"))).click(); // Wait for Inbox link to be clickable
-		Thread.sleep(2000);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div"))).click(); // Wait for Inbox to be clickable
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div[2]/a[1]"))).click();//click on documents
+      		Thread.sleep(2000);
 
 		try {
 		    wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[2]/div[2]/div/div/div/table/tbody/tr[1]/td[8]/div/button/span[1]/svg"))).click();
@@ -171,9 +179,9 @@ for(int i=0;i<=10;i++)
 		    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall']"))).click(); // Wait for 3 dots button to be clickable
 		}
 
-		driver.findElement(By.xpath("(//span[@class='UnsignChldTwoChldOne']//span)[1]")).click();//click comment button
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[2]/div[2]/div/div/div/table/tbody/tr[2]/td/div/div[2]/div/div[1]/span/span")).click();//click comment button
 		
-     WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[text()='No comments for the document.']")));
+     WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/p")));
 		String message = Emessage.getText().trim();
 
 		// Check if the message contains the specific text and extract it
@@ -186,7 +194,7 @@ for(int i=0;i<=10;i++)
 
 		softAssert.assertEquals(successMessage, expectedSuccessMessage); // For TestNG
 
-     driver.findElement(By.xpath("//div[@class='react-confirm-alert-button-group']//button[1]")).click();//click ok button in model
+     driver.findElement(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button")).click();//click ok button in model
 	testLogout();
 
 	
@@ -201,7 +209,8 @@ for(int i=0;i<=10;i++)
 		testLogin();
 		Thread.sleep(2000);
 		try {
-			driver.findElement(By.linkText("Inbox")).click();
+			wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div"))).click(); // Wait for Inbox to be clickable
+	       
 		}
 		catch (NoSuchElementException e) 
 		{
@@ -212,7 +221,8 @@ for(int i=0;i<=10;i++)
 		{
 			driver.findElement(By.xpath("(//a[@class='sidebar-link'])[3]")).click();//click on Inbox
 		}
-		   
+		 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div[2]/a[1]"))).click();;//click on documents
+	     
 		Thread.sleep(2000);
 		
 		try {
@@ -225,7 +235,7 @@ for(int i=0;i<=10;i++)
 
 		try{
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("(//span[@class='UnsignChldTwoChldOne']//span)[2]")).click();//click on email
+			driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[2]/div[2]/div/div/div/table/tbody/tr[2]/td/div/div[2]/div/div[2]/span")).click();//click on email
 		}
 		catch (Exception e)
 		{
@@ -233,13 +243,13 @@ for(int i=0;i<=10;i++)
 			driver.findElement(By.xpath("(//img[@loading='lazy']/following-sibling::span)[2]")).click();//click on email
 		}
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("(//div[@class='modalInput']//input)[1]")).sendKeys(emailid);//enter mail in To textfield
-		driver.findElement(By.xpath("//div[@class='ccDiv']//span[1]")).click();//click cc field
-		driver.findElement(By.xpath("(//div[@class='modalInput']//input)[2]")).sendKeys(ccEmailid);//enter mailid in cc textfield
-		driver.findElement(By.xpath("(//div[@class='modalInput']//input)[3]")).sendKeys("signed document");//enter the subject
-		driver.findElement(By.xpath("//div[@class='modalInput']//textarea[1]")).sendKeys("document was signed ");//enter the body
-		driver.findElement(By.xpath("(//div[@class='actionBtn']//span)[1]")).click();//click send btn
-		WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//div[@class='react-confirm-alert']//div)[1]")));
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[3]/div/div[2]/div[2]/input")).sendKeys(emailid);//enter mail in To textfield
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[3]/div/div[2]/div[3]/span")).click();//click cc field
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[3]/div/div[3]/div[2]/input")).sendKeys(ccEmailid);//enter mailid in cc textfield
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[3]/div/div[4]/div[2]/input")).sendKeys("signed document");//enter the subject
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[3]/div/div[5]/div[2]/textarea")).sendKeys("document was signed ");//enter the body
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[3]/div/div[8]/div[1]/span")).click();//click send btn
+		WebElement Emessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/p")));
 		String message = Emessage.getText().trim();
 
 		// Check if the message contains the specific text and extract it
@@ -254,7 +264,7 @@ for(int i=0;i<=10;i++)
 
 //		 Click OK on the message
 		WebElement okButton = wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//div[@class='react-confirm-alert-button-group']//button[1]")));
+				.elementToBeClickable(By.xpath("//*[@id=\"react-confirm-alert\"]/div/div/div/div/button")));
 		okButton.click();
 		softAssert.assertAll();
 		testLogout();
@@ -269,7 +279,8 @@ for(int i=0;i<=10;i++)
 
 		// Wait for the Inbox link to be clickable
 		try {
-			driver.findElement(By.linkText("Inbox")).click();
+			wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div"))).click(); // Wait for Inbox to be clickable
+	           
 		}
 		catch (NoSuchElementException e) 
 		{
@@ -280,22 +291,23 @@ for(int i=0;i<=10;i++)
 		{
 			driver.findElement(By.xpath("(//a[@class='sidebar-link'])[3]")).click();//click on Inbox
 		}
-
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[1]/div[2]/div[6]/div/div[2]/a[1]"))).click();//click on documents
+		   
 		// Wait for the "three dots" button to be clickable
 		try {
-		    wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/main/div[2]/div/div[2]/div[2]/div/div/div/table/tbody/tr[1]/td[8]/div/button"))).click();
+		    wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[2]/div[2]/div/div/div/table/tbody/tr[1]/td[8]/div/button/span[1]/svg"))).click();
 		} catch (NoSuchElementException e) {
-		    wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/main/div[2]/div/div[2]/div[2]/div/div/div/table/tbody/tr[1]/td[8]/div/button/span[1]"))).click(); // Click "three dots"
+		    wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/main/div[2]/div/div[2]/div[2]/div/div/div/table/tbody/tr[1]/td[8]/div/button/span[1]"))).click(); // Wait for 3 dots button to be clickable
 		} catch (Exception e) {
-		    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall']"))).click(); // Click the "three dots"
+		    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall']"))).click(); // Wait for 3 dots button to be clickable
 		}
 
 		
 		
 		
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[@class='UnsignChldTwoChldOne']//img)[3]"))).click(); // Click view button
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div[2]/div[2]/div/div/div/table/tbody/tr[2]/td/div/div[2]/div/div[3]/span/span"))).click(); // Click view button
 		// Wait for the back button to be clickable
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space(text())='Back']"))).click(); // Click back button
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[5]/div[1]/button"))).click(); // Click back button
 
 		testLogout();
 ;

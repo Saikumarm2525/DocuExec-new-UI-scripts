@@ -25,7 +25,7 @@ public class Baseclass {
     public String dc="https://docuxecstage.finfotech.co.in/login";
     public String p2pl="https://p2puat.finfotech.co.in/login";
     public String Stagingurl="https://docuxecstage.finfotech.co.in/login";
-    String username = "6026602660"//9011901190on uat///6011601160staging
+    String username = "8999999999"//9011901190on uat///6011601160staging
     		+ "";//"8182818282";//"8081808180";  // Replace with your username//6380695905
     String password = "Test@123";//Replace with your Password
     String profilemail="thiya@gmail.com";//provide profile mail id to perform Third party signing

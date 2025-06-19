@@ -10,10 +10,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class PendingAction extends Baseclass {
@@ -420,9 +422,9 @@ public class PendingAction extends Baseclass {
 		WebElement noteElement = wait.until(ExpectedConditions.presenceOfElementLocated(noteXpath));
 
 		if (noteElement != null && noteElement.isDisplayed()) {
-			System.out.println("✅ Note is present and visible.");
+			System.out.println("âœ… Note is present and visible.");
 		} else {
-			System.out.println("❌ Note is not present.");
+			System.out.println("â�Œ Note is not present.");
 		} // or
 			// XPath
 
@@ -488,9 +490,9 @@ public class PendingAction extends Baseclass {
 		WebElement noteElement = wait.until(ExpectedConditions.presenceOfElementLocated(noteXpath));
 
 		if (noteElement != null && noteElement.isDisplayed()) {
-			System.out.println("✅ Note is present and visible.");
+			System.out.println("âœ… Note is present and visible.");
 		} else {
-			System.out.println("❌ Note is not present.");
+			System.out.println("â�Œ Note is not present.");
 		} // or
 			// XPath
 
@@ -556,9 +558,9 @@ public class PendingAction extends Baseclass {
 		WebElement noteElement = wait.until(ExpectedConditions.presenceOfElementLocated(noteXpath));
 
 		if (noteElement != null && noteElement.isDisplayed()) {
-			System.out.println("✅ Note is present and visible.");
+			System.out.println("âœ… Note is present and visible.");
 		} else {
-			System.out.println("❌ Note is not present.");
+			System.out.println("â�Œ Note is not present.");
 		} // or
 			// XPath
 
@@ -609,7 +611,7 @@ public class PendingAction extends Baseclass {
 			// Replace with the correct path to your AutoIt script
 
 			Thread.sleep(2000);
-			uploadFile(filePath);
+			uploadFile("C:\\Users\\saikumarm\\Downloads\\DocuExec_TandC_doc");
 			Thread.sleep(2000);
 
 			// Click on the "Sign by me" button
@@ -627,7 +629,7 @@ public class PendingAction extends Baseclass {
 		try {
 			Thread.sleep(2000);
 			// Set the clipboard with file location
-			StringSelection stringSelection = new StringSelection(filePath);
+			StringSelection stringSelection = new StringSelection("C:\\Users\\saikumarm\\Downloads\\DocuExec_TandC_doc");
 			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
 
 			// Create a new Robot instance
@@ -1083,5 +1085,140 @@ public class PendingAction extends Baseclass {
 		driver.findElement(By.xpath("/html/body/div[2]/div/div/div/div[2]/button[1]")).click();
 		// click alert okk
 	}
+	
+	public void clickPendingActions() throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+
+		driver.manage().window().setSize(new org.openqa.selenium.Dimension(1024, 768));
+
+		Thread.sleep(2000);
+
+		// Locate the scrollable menu bar
+		WebElement menuBar = wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.xpath("//div[@class='userActionMenus menuBarScroll']")));
+
+		// Try to find the target element (may not be in view initially)
+		By pendingActionXpath = By.xpath("//a[normalize-space(text())='Pending Action Inbox']");
+
+		boolean found = false;
+		int maxScrolls = 20; // to prevent infinite loops
+		int scrollAttempt = 0;
+
+		while (!found && scrollAttempt < maxScrolls) {
+			try {
+				WebElement pendingActionButton = menuBar.findElement(pendingActionXpath);
+				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", pendingActionButton);
+				wait.until(ExpectedConditions.elementToBeClickable(pendingActionButton)).click();
+				found = true;
+			} catch (Exception e) {
+				// Scroll the menu bar horizontally or vertically depending on layout
+				((JavascriptExecutor) driver).executeScript("arguments[0].scrollTop += 50;", menuBar);
+				scrollAttempt++;
+			}
+		}
+
+		if (!found) {
+			throw new NoSuchElementException("Could not find 'Pending Action Inbox' after scrolling.");
+		} // actual
+			// ID,
+			// class,
+		By noteXpath = By.xpath(
+				"//p[contains(.,'Note: Once the action is performed successfully, the document will be moved to inbox.')]");
+
+		WebElement noteElement = wait.until(ExpectedConditions.presenceOfElementLocated(noteXpath));
+
+	}
+	
+	//-----------scenerio based automation scripts---------------
+	
+	
+	//this method automates the process fo searching a file name in search button
+	@Test
+	public void searchFileNamePendingActions() throws Exception {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		testLogin();
+		Thread.sleep(4000);
+		clickPendingActions();
+		Thread.sleep(5000);
+	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class,'MuiInputBase-root MuiInput-root')]//input[1]"))).sendKeys(fileName);
+	Thread.sleep(3000); 
+	testLogout();
+		
+	}
+	
+	//this method checks the whether the the reqired data is displayed or not in a row
+	@Test
+	public void rowDetailsDisplayed() throws Exception
+	{
+		testLogin();
+		Thread.sleep(4000);
+		clickPendingActions();
+		Thread.sleep(5000);
+		
+	     driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[2]/div/div[2]/div/div/div/table/tbody/tr[1]/td[2]")).isDisplayed();//filename displayed
+	    Thread.sleep(3000);
+	     driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[2]/div/div[2]/div/div/div/table/tbody/tr[1]/td[3]")).isDisplayed();//size
+	     Thread.sleep(3000);
+	     driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[2]/div/div[2]/div/div/div/table/tbody/tr[1]/td[3]")).isDisplayed();//Status
+	     Thread.sleep(3000);
+	     driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[2]/div/div[2]/div/div/div/table/tbody/tr[1]/td[5]")).isDisplayed();//LastUpdated
+	     Thread.sleep(3000); 
+	 	testLogout();
+	}
+	
+	
+	//this method checks the table controls
+	@Test
+	public void checkTablePaginationOperation() throws Exception
+	{
+		testLogin();
+		Thread.sleep(5000);
+		clickPendingActions();
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[2]/div/table/tfoot/tr/td/div/div[2]")).click();//press dropdown
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//*[@id=\"menu-\"]/div[3]/ul/li[1]")).click();//selcet 10 rows
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[2]/div/table/tfoot/tr/td/div/div[2]")).click();//press dropdown
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//*[@id=\"menu-\"]/div[3]/ul/li[1]")).click();//selcet 20 rows
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[2]/div/table/tfoot/tr/td/div/div[2]")).click();//press dropdown
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//*[@id=\"menu-\"]/div[3]/ul/li[3]")).click();//selcet 50 rows
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[2]/div/table/tfoot/tr/td/div/div[3]/span[4]/button")).click();//next page
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[2]/div/table/tfoot/tr/td/div/div[3]/span[2]/button")).click();//previous page
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[2]/div/table/tfoot/tr/td/div/div[3]/span[5]/button")).click();//Last page
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[2]/div/table/tfoot/tr/td/div/div[3]/span[1]/button")).click();//First page
+		
+		testLogout();
+	}
+	
+	
+	//this method automates the process of whether "Note: Once the action is performed successfully, the document will be moved to inbox." and "Pending Signatures" is visible
+	@Test
+	public void checkContentDisplay() throws Exception {
+		testLogin();
+		Thread.sleep(2000);
+		clickPendingActions();
+		Thread.sleep(3000);	
+  String text=driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/div[2]/div/div[1]/div[1]")).getText();
+  System.out.println(text);
+  Assert.assertEquals("Pending Signatures", text);
+  
+  Thread.sleep(2000);
+  String text2=driver.findElement(By.xpath("//*[@id=\"defaultBackGround\"]/div[2]/div[1]/div/div/p")).getText();
+  System.out.println(text2);
+  Assert.assertEquals("Note: Once the action is performed successfully, the document will be moved to inbox.", text2);
+  Thread.sleep(4000);
+  testLogout();
+	
+	}
+	
+	
 
 }

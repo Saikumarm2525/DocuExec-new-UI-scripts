@@ -25,14 +25,14 @@ public class Baseclass {
     public String dc="https://docuxecstage.finfotech.co.in/login";
     public String p2pl="https://p2puat.finfotech.co.in/login";
     public String Stagingurl="https://docuxecstage.finfotech.co.in/login";
-    String username = "6026602660"//9011901190on uat///6011601160staging
+    String username = "8989898989"//9011901190on uat///6011601160staging
     		+ "";//"8182818282";//"8081808180";  // Replace with your username//6380695905
     String password = "Test@123";//Replace with your Password
     String profilemail="thiya@gmail.com";//provide profile mail id to perform Third party signing
     String otp="654321";
-    String name="lavanyaa";
-    String mail="lavanyab401@gmail.com";
-    String mob="6374899399";
+    String name="Saiii";
+    String mail="sai123@gmail.com";
+    String mob="8989898989";
     String wotp="654321";
     String vouchercode="uatst00004";//Enter Voucher Code 
     String filePath="C:\\Users\\lavanyab.FINFOTECH\\Downloads\\Statement finvu.pdf";//Replace File path
@@ -96,9 +96,9 @@ public class Baseclass {
 //		driver.navigate().to(Stagingurl + "/accountInfo");
 
 		Thread.sleep(3000);
-		driver.findElement(By.xpath("//button[contains(@class,'UserDetailCustom dropdown-toggle')]")).click();//click on name
+		driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[1]/div/span[1]/div/button")).click();//click on name
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("(//button[normalize-space(text())='Logout'])[1]")).click();//click on login
+		driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[1]/div/span[1]/div/div/button[2]")).click();//click on login
 
 	}
     @AfterClass
